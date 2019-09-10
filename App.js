@@ -13,6 +13,7 @@ import { createStackNavigator} from 'react-navigation-stack';
 import NavigationService from './src/utils/NavigatorService';
 import MainScreen from './src/screens/MainScreen';
 import MetricasScreen from './src/screens/MetricasScreen';
+import addMetricaScreen from './src/screens/addMetricaScreen';
 import { Icon } from 'react-native-elements';
 
 const navOptions = ({navigation, }) => {
@@ -34,25 +35,36 @@ const navOptions = ({navigation, }) => {
     };
 };
 
-const drawerScreens = createDrawerNavigator(
+const principalStack = createStackNavigator(
     {
-        Principal: MainScreen,
-        Metricas: MetricasScreen,
+        MainScreen,
+    },
+    {
+        defaultNavigationOptions: navOptions,
+    }
+);
+
+const metricasStack = createStackNavigator(
+    {
+        MetricasScreen,
+        addMetricaScreen,
+    },
+    {
+        defaultNavigationOptions: navOptions,
+    }
+);
+
+const drawer = createDrawerNavigator(
+    {
+        Principal: principalStack,
+        Metricas: metricasStack,
     },
     {
         initialRouteName: 'Principal',
     }
 );
+const AppContainer = createAppContainer(drawer);
 
-const AppContainer = createAppContainer(createStackNavigator(
-    {
-        drawer: drawerScreens,
-    },
-    {
-        initialRouteName: 'drawer',
-        defaultNavigationOptions: navOptions,
-    }
-));
 
 export default class App extends Component {
     render() {
