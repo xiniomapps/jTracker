@@ -1,15 +1,26 @@
 import {ADD_METRICA, DEL_METRICA} from './actions';
 const initialState = {
     total: 0,
-    metricas: {},
+    colection: {},
 };
 
 export default function metricasReducer(state = initialState, action){
     switch (action.type){
-        case ADD_METRICA:
+        case ADD_METRICA: {
+            let index = state.total + 1;
             return {
-                total: state.total + 1,
+                ...state,
+                total: index,
+                colection: {
+                    ...state.colection,
+                    [index]: {
+                        name: action.payload.name,
+                        creationDate: Date.now(),
+                        objective: action.payload.objective,
+                    },
+                },
             };
+        }
         case DEL_METRICA:
             if (state.total >= 1) {
                 return {
@@ -25,9 +36,10 @@ export default function metricasReducer(state = initialState, action){
     }
 }
 
-export const addMetrica = () => {
+export const addMetrica = (obj) => {
     return {
         type: ADD_METRICA,
+        payload: obj,
     };
 };
 
