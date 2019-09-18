@@ -1,7 +1,7 @@
 import {ADD_METRICA, DEL_METRICA} from './actions';
 const initialState = {
     total: 0,
-    colection: {},
+    collection: {},
 };
 
 export default function metricasReducer(state = initialState, action){
@@ -11,8 +11,8 @@ export default function metricasReducer(state = initialState, action){
             return {
                 ...state,
                 total: index,
-                colection: {
-                    ...state.colection,
+                collection: {
+                    ...state.collection,
                     [index]: {
                         name: action.payload.name,
                         creationDate: Date.now(),
