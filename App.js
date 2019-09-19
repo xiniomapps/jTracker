@@ -14,6 +14,9 @@ import NavigationService from './src/utils/NavigatorService';
 import MainScreen from './src/screens/MainScreen';
 import MetricasScreen from './src/screens/MetricasScreen';
 import addMetricaScreen from './src/screens/addMetricaScreen';
+import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
+import AddReadingScreen from './src/screens/AddReadingScreen';
+import ReadingDetailsScreen from './src/screens/ReadingDetailsScreen';
 import { Icon } from 'react-native-elements';
 
 const navOptions = ({navigation, }) => {
@@ -48,6 +51,9 @@ const metricasStack = createStackNavigator(
     {
         MetricasScreen,
         addMetricaScreen,
+        MetricDetailsScreen,
+        AddReadingScreen,
+        ReadingDetailsScreen,
     },
     {
         defaultNavigationOptions: navOptions,

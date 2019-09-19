@@ -27,14 +27,13 @@ class MetricasScreen extends Component {
     }
 
     renderItem = ({item, }) => {
-        console.log(item);
         return (
             <ListItem
                 title={ this.titleFormatter(item) }
                 subtitle={ this.subtitleFormatter(item) }
                 chevron
                 bottomDivider
-                //onPress={() => this.props.onPress(index)}
+                onPress={ () => this.gotoItemDetails(item)}
                 leftIcon={
                     <Icon
                         type='material-community'
@@ -49,6 +48,11 @@ class MetricasScreen extends Component {
 
     keyExtractor = (item, index) => index.toString();
 
+    gotoItemDetails = (index) => {
+        this.props.navigation.navigate('MetricDetailsScreen', {
+            current: index,
+        });
+    }
 
     render() {
         return (

@@ -3,10 +3,12 @@ import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootSaga from '../sagas/rootSaga';
 import metricasReducer from '../redux/metricasReducer';
+import readingsReducer from '../redux/readingsReducer';
 
 const rootReducer = combineReducers(
     {
         metricas: metricasReducer,
+        readings: readingsReducer,
     }
 );
 
