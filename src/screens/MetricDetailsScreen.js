@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Text, View, FlatList } from 'react-native';
+import { Icon, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -17,7 +17,46 @@ class MetricDetailsScreen extends Component {
 
     static propTypes = {
         metricasReducer: PropTypes.object,
+        readingsReducer: PropTypes.object,
     }
+
+    getReadings = () => {
+        if (this.state.current in this.props.readingsReducer){
+            return this.props.readingsReducer[this.state.current];
+        }
+        return {};
+    }
+
+    titleFormatter = (item) => {
+        return (
+            <Text>
+                {item.item}
+            </Text>
+        );
+    }
+
+    subtitleFormatter = (item) => {
+        //console.log(item);
+        console.log(this.props.readingsReducer[this.state.current][item.item].value);
+        return (
+            <Text style={{color: '#999', }}>
+                Reading: {this.props.readingsReducer[this.state.current][item.item].value}
+            </Text>
+        );
+    }
+
+    renderItem = item => {
+        return (
+            <ListItem
+                title={this.titleFormatter(item)}
+                subtitle={this.subtitleFormatter(item)}
+                chevron
+                bottomDivider
+            />
+        );
+    }
+
+    keyExtractor = (item, index) => index.toString();
 
     render() {
         return (
@@ -33,6 +72,11 @@ class MetricDetailsScreen extends Component {
                     reverse
                     onPress={ () => this.props.navigation.navigate('AddReadingScreen', {current: this.state.current, })}
                 />
+                <FlatList
+                    data={Object.keys(this.getReadings())}
+                    renderItem={ item => this.renderItem(item) }
+                    keyExtractor={this.keyExtractor}
+                />
             </View>
         );
     }
@@ -41,6 +85,7 @@ class MetricDetailsScreen extends Component {
 const mapStateToProps = state => {
     return {
         metricasReducer: state.metricas,
+        readingsReducer: state.readings,
     };
 };
 
