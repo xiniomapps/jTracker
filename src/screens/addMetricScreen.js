@@ -3,10 +3,10 @@ import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {addMetrica} from '../redux/metricasReducer';
+import {addMetric} from '../redux/metricsReducer';
 import Input from '../components/Input';
 
-class addMetricaScreen extends Component {
+class addMetricScreen extends Component {
     constructor(props) {
         super(props);
 
@@ -17,7 +17,7 @@ class addMetricaScreen extends Component {
     }
 
     static propTypes = {
-        addMetrica: PropTypes.func,
+        addMetric: PropTypes.func,
     }
 
     handleChange = (inputName, inputValue) => {
@@ -27,8 +27,8 @@ class addMetricaScreen extends Component {
     }
 
     onSave = () => {
-        this.props.addMetrica(this.state);
-        this.props.navigation.navigate('MetricasScreen');
+        this.props.addMetric(this.state);
+        this.props.navigation.navigate('MetricsScreen');
     }
 
     render() {
@@ -43,20 +43,13 @@ class addMetricaScreen extends Component {
     }
 }
 
-//const mapStateToProps = state => {
-//    return {
-//      busquedaReducer: state.busqueda,
-//      loading: state.loading,
-//    };
-//};
-
 const mapDispatchToProps = dispatch => {
     return {
-        addMetrica: obj => {
-            dispatch(addMetrica(obj));
+        addMetric: obj => {
+            dispatch(addMetric(obj));
         },
     };
 };
 
 //--------| Conecta el componente con el store
-export default connect(null, mapDispatchToProps)(addMetricaScreen);
+export default connect(null, mapDispatchToProps)(addMetricScreen);

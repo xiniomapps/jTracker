@@ -10,13 +10,13 @@ class MetricDetailsScreen extends Component {
         let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
 
         this.state = {
-            ...this.props.metricasReducer.collection[currentMetric],
+            ...this.props.metricsReducer.collection[currentMetric],
             currentMetric,
         };
     }
 
     static propTypes = {
-        metricasReducer: PropTypes.object,
+        metricsReducer: PropTypes.object,
         readingsReducer: PropTypes.object,
     }
 
@@ -91,7 +91,7 @@ class MetricDetailsScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        metricasReducer: state.metricas,
+        metricsReducer: state.metrics,
         readingsReducer: state.readings,
     };
 };

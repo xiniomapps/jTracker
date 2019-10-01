@@ -4,16 +4,16 @@ import { Icon, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class MetricasScreen extends Component {
+class MetricsScreen extends Component {
 
     static propTypes = {
-        metricasReducer: PropTypes.object,
+        metricsReducer: PropTypes.object,
     }
 
     titleFormatter = (item) => {
         return (
             <Text>
-                {this.props.metricasReducer.collection[item].name}
+                {this.props.metricsReducer.collection[item].name}
             </Text>
         );
     }
@@ -21,7 +21,7 @@ class MetricasScreen extends Component {
     subtitleFormatter = (item) => {
         return (
             <Text style={{color: '#999', }}>
-                Objetivo: {this.props.metricasReducer.collection[item].objective}
+                Objetivo: {this.props.metricsReducer.collection[item].objective}
             </Text>
         );
     }
@@ -63,10 +63,10 @@ class MetricasScreen extends Component {
                     name='add'
                     color='red'
                     reverse
-                    onPress={ () => this.props.navigation.navigate('addMetricaScreen')}
+                    onPress={ () => this.props.navigation.navigate('addMetricScreen')}
                 />
                 <FlatList
-                    data={Object.keys(this.props.metricasReducer.collection)}
+                    data={Object.keys(this.props.metricsReducer.collection)}
                     renderItem={ (item) => this.renderItem(item) }
                     keyExtractor={this.keyExtractor}
                 />
@@ -77,8 +77,8 @@ class MetricasScreen extends Component {
 
 const mapStateToProps = state => {
     return {
-        metricasReducer: state.metricas,
+        metricsReducer: state.metrics,
     };
 };
 
-export default connect(mapStateToProps, null)(MetricasScreen);
+export default connect(mapStateToProps, null)(MetricsScreen);

@@ -46,13 +46,6 @@ class AddReadingScreen extends Component {
     }
 }
 
-//const mapStateToProps = state => {
-//    return {
-//      busquedaReducer: state.busqueda,
-//      loading: state.loading,
-//    };
-//};
-
 const mapDispatchToProps = dispatch => {
     return {
         addReading: obj => {

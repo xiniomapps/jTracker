@@ -12,8 +12,8 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import { createStackNavigator} from 'react-navigation-stack';
 import NavigationService from './src/utils/NavigatorService';
 import MainScreen from './src/screens/MainScreen';
-import MetricasScreen from './src/screens/MetricasScreen';
-import addMetricaScreen from './src/screens/addMetricaScreen';
+import MetricsScreen from './src/screens/MetricsScreen';
+import addMetricScreen from './src/screens/addMetricScreen';
 import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
 import AddReadingScreen from './src/screens/AddReadingScreen';
 import ReadingDetailsScreen from './src/screens/ReadingDetailsScreen';
@@ -47,10 +47,10 @@ const principalStack = createStackNavigator(
     }
 );
 
-const metricasStack = createStackNavigator(
+const metricsStack = createStackNavigator(
     {
-        MetricasScreen,
-        addMetricaScreen,
+        MetricsScreen,
+        addMetricScreen,
         MetricDetailsScreen,
         AddReadingScreen,
         ReadingDetailsScreen,
@@ -63,7 +63,7 @@ const metricasStack = createStackNavigator(
 const drawer = createDrawerNavigator(
     {
         Principal: principalStack,
-        Metricas: metricasStack,
+        Metrics: metricsStack,
     },
     {
         initialRouteName: 'Principal',

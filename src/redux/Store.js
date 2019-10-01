@@ -5,7 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
 
 import rootSaga from '../sagas/rootSaga';
-import metricasReducer from '../redux/metricasReducer';
+import metricsReducer from './metricsReducer';
 import readingsReducer from '../redux/readingsReducer';
 
 
@@ -17,7 +17,7 @@ const persistedReducer = persistReducer(
     },
     combineReducers({
         // Reductores
-        metricas: metricasReducer,
+        metrics: metricsReducer,
         readings: readingsReducer,
     })
 );
