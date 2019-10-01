@@ -23,7 +23,6 @@ class AddReadingScreen extends Component {
     }
 
     handleChange = (inputName, inputValue) => {
-        console.log(inputName + ' -> ' + inputValue);
         this.setState({
             [inputName]: inputValue,
         });

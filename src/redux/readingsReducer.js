@@ -27,7 +27,6 @@ export default function readingsReducer(state = initialState, action){
 }
 
 export const addReading = (obj) => {
-    console.log(obj);
     return {
         type: ADD_READING,
         payload: obj,
