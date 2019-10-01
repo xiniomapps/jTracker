@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 class MetricDetailsScreen extends Component {
     constructor(props) {
         super(props);
-        let current = this.props.navigation.getParam('current', undefined);
+        let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
 
         this.state = {
-            ...this.props.metricasReducer.collection[current],
-            current,
+            ...this.props.metricasReducer.collection[currentMetric],
+            currentMetric,
         };
     }
 
@@ -21,8 +21,8 @@ class MetricDetailsScreen extends Component {
     }
 
     getReadings = () => {
-        if (this.state.current in this.props.readingsReducer){
-            return this.props.readingsReducer[this.state.current];
+        if (this.state.currentMetric in this.props.readingsReducer){
+            return this.props.readingsReducer[this.state.currentMetric];
         }
         return {};
     }
@@ -36,11 +36,9 @@ class MetricDetailsScreen extends Component {
     }
 
     subtitleFormatter = (item) => {
-        //console.log(item);
-        console.log(this.props.readingsReducer[this.state.current][item.item].value);
         return (
             <Text style={{color: '#999', }}>
-                Reading: {this.props.readingsReducer[this.state.current][item.item].value}
+                Reading: {this.props.readingsReducer[this.state.currentMetric][item.item].value}
             </Text>
         );
     }
@@ -52,8 +50,17 @@ class MetricDetailsScreen extends Component {
                 subtitle={this.subtitleFormatter(item)}
                 chevron
                 bottomDivider
+                onPress={() => this.gotoItemDetails(item)}
             />
         );
+    }
+
+    gotoItemDetails = (item) => {
+        console.log(item);
+        this.props.navigation.navigate('ReadingDetailsScreen', {
+            currentMetric: this.state.currentMetric,
+            currentReading: item.item,
+        });
     }
 
     keyExtractor = (item, index) => index.toString();
@@ -70,7 +77,7 @@ class MetricDetailsScreen extends Component {
                     name='add'
                     color='red'
                     reverse
-                    onPress={ () => this.props.navigation.navigate('AddReadingScreen', {current: this.state.current, })}
+                    onPress={ () => this.props.navigation.navigate('AddReadingScreen', {current: this.state.currentMetric, })}
                 />
                 <FlatList
                     data={Object.keys(this.getReadings())}

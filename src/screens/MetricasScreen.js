@@ -50,7 +50,7 @@ class MetricasScreen extends Component {
 
     gotoItemDetails = (index) => {
         this.props.navigation.navigate('MetricDetailsScreen', {
-            current: index,
+            currentMetric: index,
         });
     }
 
