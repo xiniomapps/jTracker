@@ -1,4 +1,4 @@
-import { ADD_READING, DEL_READING } from './actions';
+import { ADD_READING, DEL_READING, DEL_ALL_READINGS } from './actions';
 
 const initialState = {
 
@@ -21,6 +21,8 @@ export default function readingsReducer(state = initialState, action){
         case DEL_READING: {
             return state;
         }
+        case DEL_ALL_READINGS:
+            return initialState;
         default:
             return state;
     }

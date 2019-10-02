@@ -1,4 +1,4 @@
-import {ADD_METRIC, DEL_METRIC} from './actions';
+import {ADD_METRIC, DEL_METRIC, DEL_ALL_METRICS} from './actions';
 const initialState = {
     total: 0,
     collection: {},
@@ -31,6 +31,8 @@ export default function metricsReducer(state = initialState, action){
             else {
                 return state;
             }
+        case DEL_ALL_METRICS:
+            return initialState;
         default:
             return state;
     }
