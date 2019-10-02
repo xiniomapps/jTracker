@@ -7,13 +7,39 @@ const initialState = {
 export default function readingsReducer(state = initialState, action){
     switch (action.type){
         case ADD_READING: {
+            let year, month, day;
+            [year, month, day, ] = action.payload.date.split('-');
+
+            // Create copy of current state
+            let stateCopy = Object.assign({}, state);
+            
+            // add index if not exists
+            if (!(action.payload.currentMetric in stateCopy)){
+                stateCopy[action.payload.currentMetric] = {};
+            }
+
+            // add year if not exists
+            if (!(year in stateCopy[action.payload.currentMetric])){
+                stateCopy[action.payload.currentMetric][year] = {};
+            }
+
+            // add month if not exists
+            if (!(month in stateCopy[action.payload.currentMetric][year])){
+                stateCopy[action.payload.currentMetric][year][month] = {};
+            }
             return {
-                ...state,
-                [action.payload.index]: {
-                    ...state[action.payload.index],
-                    [action.payload.date]: {
-                        value: action.payload.value,
-                        comments: action.payload.comments,
+                ...stateCopy,
+                [action.payload.currentMetric]: {
+                    ...stateCopy[action.payload.currentMetric],
+                    [year]: {
+                        ...stateCopy[action.payload.currentMetric][year],
+                        [month]: {
+                            ...stateCopy[action.payload.currentMetric][year][month],
+                            [day]: {
+                                value: action.payload.value,
+                                comments: action.payload.comments,
+                            },
+                        },
                     },
                 },
             };

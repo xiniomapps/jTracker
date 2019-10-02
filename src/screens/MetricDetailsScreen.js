@@ -1,23 +1,47 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Calendar } from 'react-native-calendars';
+import {Overlay, Button} from 'react-native-elements';
+import Input from '../components/Input';
+import { addReading } from '../redux/readingsReducer';
+
 
 class MetricDetailsScreen extends Component {
     constructor(props) {
         super(props);
         let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
+        const today = new Date();
 
         this.state = {
             ...this.props.metricsReducer.collection[currentMetric],
+            /* Metric selected in the previous screen */
             currentMetric,
+            today,
+            /* year and month showed on screen */
+            currentYear: today.getFullYear(),
+            currentMonth: today.getMonth() + 1,
+            /* Date Selected by the user in calendar, obj returned by calendar */
+            selectedDate: undefined,
+            showOverlay: false,
+
+            /* overlay input fields:*/
+            value: '',
+            comments: '',
         };
     }
 
     static propTypes = {
         metricsReducer: PropTypes.object,
         readingsReducer: PropTypes.object,
+        addReading: PropTypes.func,
+    }
+
+    handleChange = (inputName, inputValue) => {
+        this.setState({
+            [inputName]: inputValue,
+        });
     }
 
     getReadings = () => {
@@ -27,67 +51,119 @@ class MetricDetailsScreen extends Component {
         return {};
     }
 
-    titleFormatter = (item) => {
-        return (
-            <Text>
-                {item.item}
-            </Text>
-        );
+    pickDate = (dayObj) => {
+        let metric = this.state.currentMetric;
+        let year = dayObj.year;
+        let month = dayObj.month.toString().padStart('2', '0');
+        let day = dayObj.day.toString().padStart('2', '0');
+        let value = '';
+        let comments = '';
+        console.log(metric);
+        console.log(year);
+        console.log(month);
+        console.log(this.props.readingsReducer);
+        if (this.isValidReading(metric, year, month) && day in this.props.readingsReducer[metric][year][month]){
+            value = this.props.readingsReducer[metric][year][month][day].value;
+            comments = this.props.readingsReducer[metric][year][month][day].comments;
+        }
+        console.log(value);
+        console.log(comments);
+        this.setState({
+            showOverlay: true,
+            selectedDate: dayObj,
+            value,
+            comments,
+        }, () => console.log(this.state));
     }
 
-    subtitleFormatter = (item) => {
-        return (
-            <Text style={{color: '#999', }}>
-                Reading: {this.props.readingsReducer[this.state.currentMetric][item.item].value}
-            </Text>
-        );
-    }
-
-    renderItem = item => {
-        return (
-            <ListItem
-                title={this.titleFormatter(item)}
-                subtitle={this.subtitleFormatter(item)}
-                chevron
-                bottomDivider
-                onPress={() => this.gotoItemDetails(item)}
-            />
-        );
-    }
-
-    gotoItemDetails = (item) => {
-        console.log(item);
-        this.props.navigation.navigate('ReadingDetailsScreen', {
+    onSave = () => {
+        this.props.addReading({
             currentMetric: this.state.currentMetric,
-            currentReading: item.item,
+            value: this.state.value,
+            date: this.state.selectedDate.dateString,
+            comments: this.state.comments,
+            photo: '',
+        });
+
+        this.setState({
+            showOverlay: false,
+            selectedDate: undefined,
+            value: '',
+            comments: '',
+            photo: '',
         });
     }
 
-    keyExtractor = (item, index) => index.toString();
+    /* returns true if there's a registry for date */
+    isValidReading = (metric, year, month) => {
+        if ((metric in this.props.readingsReducer) &&
+        (year in this.props.readingsReducer[metric]) &&
+        (month in this.props.readingsReducer[metric][year])){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    getMarkedDates = () => {
+        let year = this.state.currentYear;
+        let month = this.state.currentMonth;
+        let metric = this.state.currentMetric;
+
+        if (this.isValidReading(metric, year, month)){
+            let result = {};
+            Object.keys(this.props.readingsReducer[metric][year][month]).forEach((el) => {
+                result[year + '-' + month + '-' + el] = {selected: true, selectedColor: '#069', };
+            });
+            return result;
+        }
+        return {};
+    }
+
+    onMonthChange = (month) => {
+        this.setState({
+            currentYear: month.year,
+            currentMonth: month.month.toString().padStart('2', '0'),
+        });
+    }
 
     render() {
         return (
             <View>
+                <Overlay
+                    isVisible={this.state.showOverlay}
+                    onBackdropPress={ () => this.setState({ showOverlay: false, }) }
+                >
+                    <View>
+                        <Input name='value' value={this.state.value} label='Day Reading' placeholder='' onChange={this.handleChange} />
+                        <Input name='comments' value={this.state.comments} placeholder='' label='Comments' onChange={this.handleChange} />
+                        <Button title='Save' onPress={ this.onSave } />
+                    </View>
+                </Overlay>
                 <Text>Nombre: {this.state.name}</Text>
                 <Text>Fecha: {this.state.creationDate}</Text>
                 <Text>Objetivo: {this.state.objective}</Text>
 
-                <Icon
-                    type='material'
-                    name='add'
-                    color='red'
-                    reverse
-                    onPress={ () => this.props.navigation.navigate('AddReadingScreen', {current: this.state.currentMetric, })}
-                />
-                <FlatList
-                    data={Object.keys(this.getReadings())}
-                    renderItem={ item => this.renderItem(item) }
-                    keyExtractor={this.keyExtractor}
+                <Calendar
+                    maxDate={this.state.today}
+                    onDayPress={(dayObj) => this.pickDate(dayObj)}
+                    hideExtraDays={true}
+                    markedDates={this.getMarkedDates()}
+                    onMonthChange={ (month) => this.onMonthChange(month) }
                 />
             </View>
         );
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addReading: obj => {
+            dispatch(addReading(obj));
+        },
+    };
+};
 
 const mapStateToProps = state => {
     return {
@@ -96,4 +172,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(MetricDetailsScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MetricDetailsScreen);
