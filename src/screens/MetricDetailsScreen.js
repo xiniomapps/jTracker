@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Calendar } from 'react-native-calendars';
 import {Overlay, Button} from 'react-native-elements';
 import Input from '../components/Input';
 import { addReading } from '../redux/readingsReducer';
-
+import MonthlyChart from '../components/MonthlyChart';
 
 class MetricDetailsScreen extends Component {
     constructor(props) {
@@ -121,6 +121,21 @@ class MetricDetailsScreen extends Component {
         return {};
     }
 
+    /**
+     * Gets the current month readings object from the redux store
+     * When there's no data available it returns an empty object
+     */
+    getMonhlyChartData = () => {
+        let year = this.state.currentYear;
+        let month = this.state.currentMonth;
+        let metric = this.state.currentMetric;
+
+        if (this.isValidReading(metric, year, month)){
+            return this.props.readingsReducer[metric][year][month];
+        }
+        return {};
+    }
+
     onMonthChange = (month) => {
         this.setState({
             currentYear: month.year,
@@ -128,9 +143,10 @@ class MetricDetailsScreen extends Component {
         });
     }
 
+
     render() {
         return (
-            <View>
+            <View style={{flex: 1, }}>
                 <Overlay
                     isVisible={this.state.showOverlay}
                     onBackdropPress={ () => this.setState({ showOverlay: false, }) }
@@ -141,17 +157,23 @@ class MetricDetailsScreen extends Component {
                         <Button title='Save' onPress={ this.onSave } />
                     </View>
                 </Overlay>
-                <Text>Nombre: {this.state.name}</Text>
-                <Text>Fecha: {this.state.creationDate}</Text>
-                <Text>Objetivo: {this.state.objective}</Text>
-
-                <Calendar
-                    maxDate={this.state.today}
-                    onDayPress={(dayObj) => this.pickDate(dayObj)}
-                    hideExtraDays={true}
-                    markedDates={this.getMarkedDates()}
-                    onMonthChange={ (month) => this.onMonthChange(month) }
-                />
+                <View style={{alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
+                    <Text style={{color: '#666', marginTop: 5, fontSize: 18, fontWeight: 'bold', }}>{this.state.name}</Text>
+                    <MonthlyChart color='#069' data={this.getMonhlyChartData()}/>
+                    <Text style={{color: '#999', }}>My objective: {this.state.objective}</Text>
+                </View>
+                <View style={{flex: 1, paddingTop: 10, borderTopColor: '#ddd', borderTopWidth: 1, }}>
+                    <Calendar
+                        maxDate={this.state.today}
+                        onDayPress={(dayObj) => this.pickDate(dayObj)}
+                        hideExtraDays={true}
+                        markedDates={this.getMarkedDates()}
+                        onMonthChange={ (month) => this.onMonthChange(month) }
+                    />
+                </View>
+                <View style={{alignItems: 'center', padding: 20, }}>
+                    <Text style={{color: '#999', }}>This objective was created on {Date(this.state.creationDate)}</Text>
+                </View>
             </View>
         );
     }
