@@ -58,22 +58,16 @@ class MetricDetailsScreen extends Component {
         let day = dayObj.day.toString().padStart('2', '0');
         let value = '';
         let comments = '';
-        console.log(metric);
-        console.log(year);
-        console.log(month);
-        console.log(this.props.readingsReducer);
         if (this.isValidReading(metric, year, month) && day in this.props.readingsReducer[metric][year][month]){
             value = this.props.readingsReducer[metric][year][month][day].value;
             comments = this.props.readingsReducer[metric][year][month][day].comments;
         }
-        console.log(value);
-        console.log(comments);
         this.setState({
             showOverlay: true,
             selectedDate: dayObj,
             value,
             comments,
-        }, () => console.log(this.state));
+        });
     }
 
     onSave = () => {

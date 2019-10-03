@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, View, Text } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import PropTypes from 'prop-types';
 
@@ -33,12 +33,12 @@ export default class MonthlyChart extends Component {
         let result = [];
         // get sortedKeys array and create the new array with data
         Object.keys(this.props.data).sort().forEach(el => {
-            result.push(this.props.data[el].value);
+            result.push(parseFloat(this.props.data[el].value));
         });
         return { data: result, };
     }
 
-    render() {
+    renderChart() {
         return (
             <LineChart
                 data={{
@@ -58,7 +58,7 @@ export default class MonthlyChart extends Component {
                 width={this.props.width}
                 height={this.props.height}
                 yAxisLabel={''}
-                fromZero={true}
+                //fromZero={true}
                 chartConfig={{
                     backgroundColor: '#fff',
                     backgroundGradientFrom: this.props.color,
@@ -78,4 +78,17 @@ export default class MonthlyChart extends Component {
             />
         );
     }
+
+    render = () => {
+        if (Object.entries(this.props.data).length === 0){
+            return (
+                <View style={{height:this.props.height, justifyContent: 'center', paddingLeft: 15, paddingRight: 15, }}>
+                    <Text style={{color: '#999', textAlign: 'center', fontSize: 16, marginBottom: 20, fontWeight: 'bold', }}>No data found</Text>
+                    <Text style={{color: '#999', textAlign: 'center', }}>Click on the calendar below to start adding your readings.</Text>
+                </View>
+            );
+        }
+        return this.renderChart();
+    }
+
 }
