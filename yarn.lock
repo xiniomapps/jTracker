@@ -5489,12 +5489,12 @@ react-native-calendars@^1.212.0:
     prop-types "^15.5.10"
     xdate "^0.8.0"
 
-react-native-chart-kit@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-3.6.1.tgz#fb60db12b400ae7c488b4ac7c648370033be3aa5"
-  integrity sha512-OOZmz8kOnNw7CfmukJboCIzCy5OVxB/dm8KwO7kOxxIadKvRIOES4wgPY7Xn2WD8HMJMjv7Ys2Dfgk3N0LR4IQ==
+react-native-chart-kit@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-6.4.1.tgz#ca8d2c12f5b8fa58e2ad3f0262417fd4f0f608c4"
+  integrity sha512-1dZg4AOTx3RhQxED/Xzy+A8Qlp2kxMZuCH1CO5vnUqtpeyJwSUNDn8YMu4SkLWirL2XdMb0/IPtz6+KQmol8Jg==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.13"
     paths-js "^0.4.10"
     point-in-polygon "^1.0.1"
 
