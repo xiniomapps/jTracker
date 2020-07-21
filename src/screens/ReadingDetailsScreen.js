@@ -6,8 +6,11 @@ import PropTypes from 'prop-types';
 class ReadingDetailsScreen extends Component {
     constructor(props) {
         super(props);
-        let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
-        let currentReading = this.props.navigation.getParam('currentReading', undefined);
+        let currentMetric = this.props.route.params?.currentMetric ?? undefined;
+        let currentReading= this.props.route.params?.currentReading ?? undefined;
+
+        //let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
+        //let currentReading = this.props.navigation.getParam('currentReading', undefined);
 
         this.state = {
             //...this.props.metricasReducer.collection[currentMetric],
@@ -18,6 +21,7 @@ class ReadingDetailsScreen extends Component {
 
     static propTypes = {
         readingsReducer: PropTypes.object,
+        route: PropTypes.any,
     }
 
     render() {

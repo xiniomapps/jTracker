@@ -57,7 +57,6 @@ class MetricsScreen extends Component {
     render() {
         return (
             <View>
-                <Text> Mis Métricas </Text>
                 <Icon
                     type='material'
                     name='add'

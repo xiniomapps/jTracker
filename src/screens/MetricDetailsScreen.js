@@ -11,7 +11,8 @@ import MonthlyChart from '../components/MonthlyChart';
 class MetricDetailsScreen extends Component {
     constructor(props) {
         super(props);
-        let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
+        //let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
+        let currentMetric = this.props.route.params?.currentMetric ?? undefined;
         const today = new Date();
 
         this.state = {
@@ -36,6 +37,7 @@ class MetricDetailsScreen extends Component {
         metricsReducer: PropTypes.object,
         readingsReducer: PropTypes.object,
         addReading: PropTypes.func,
+        route: PropTypes.any,
     }
 
     handleChange = (inputName, inputValue) => {
