@@ -8,7 +8,7 @@ import { Icon } from 'react-native-elements';
 import MetricsScreen from './src/screens/MetricsScreen';
 import addMetricScreen from './src/screens/addMetricScreen';
 import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
-
+import AboutScreen from './src/screens/AboutScreen';
 
 const MetricsStack = createStackNavigator();
 function MetricsStackScreen() {
@@ -21,17 +21,38 @@ function MetricsStackScreen() {
     );
 }
 
+const AboutStack = createStackNavigator();
+function AboutStackScreen(){
+    return (
+        <AboutStack.Navigator>
+            <MetricsStack.Screen name='About' component={AboutScreen} />
+        </AboutStack.Navigator>
+    );
+}
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
     return (
         <NavigationContainer>
             <Tab.Navigator>
-                <Tab.Screen name='My Metrics' component={MetricsStackScreen}
+                <Tab.Screen
+                    name='My Metrics'
+                    component={MetricsStackScreen}
                     options={{
                         // eslint-disable-next-line react/display-name
                         tabBarIcon: () => (
                             <Icon type='material-community' name='chart-line'/>
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name='About'
+                    component={AboutStackScreen}
+                    options={{
+                        // eslint-disable-next-line react/display-name
+                        tabBarIcon: () => (
+                            <Icon type='material-community' name='information-outline'/>
                         ),
                     }}
                 />
