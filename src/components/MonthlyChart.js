@@ -84,7 +84,7 @@ export default class MonthlyChart extends Component {
             return (
                 <View style={{height:this.props.height, justifyContent: 'center', paddingLeft: 15, paddingRight: 15, }}>
                     <Text style={{color: '#999', textAlign: 'center', fontSize: 16, marginBottom: 20, fontWeight: 'bold', }}>No data found</Text>
-                    <Text style={{color: '#999', textAlign: 'center', }}>Click on the calendar below to start adding your readings.</Text>
+                    <Text style={{color: '#999', textAlign: 'center', }}>Click on the calendar to start adding your readings.</Text>
                 </View>
             );
         }

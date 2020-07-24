@@ -1,4 +1,5 @@
 import { ADD_READING, DEL_READING, DEL_ALL_READINGS } from './actions';
+import moment from 'moment';
 
 const initialState = {
 
@@ -7,12 +8,14 @@ const initialState = {
 export default function readingsReducer(state = initialState, action){
     switch (action.type){
         case ADD_READING: {
-            let year, month, day;
-            [year, month, day, ] = action.payload.date.split('-');
+            let date = moment(action.payload.date);
+            let year = date.format('YYYY');
+            let month = date.format('MM');
+            let day = date.format('DD');
 
             // Create copy of current state
             let stateCopy = Object.assign({}, state);
-            
+
             // add index if not exists
             if (!(action.payload.currentMetric in stateCopy)){
                 stateCopy[action.payload.currentMetric] = {};

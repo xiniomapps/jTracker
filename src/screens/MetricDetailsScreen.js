@@ -2,32 +2,29 @@ import React, { Component } from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Calendar } from 'react-native-calendars';
 import {Overlay, Button} from 'react-native-elements';
 import Input from '../components/Input';
 import { addReading } from '../redux/readingsReducer';
 import MonthlyChart from '../components/MonthlyChart';
+import moment from 'moment';
+import CalendarStrip from 'react-native-calendar-strip';
 
 class MetricDetailsScreen extends Component {
     constructor(props) {
         super(props);
-        //let currentMetric = this.props.navigation.getParam('currentMetric', undefined);
         let currentMetric = this.props.route.params?.currentMetric ?? undefined;
-        const today = new Date();
 
         this.state = {
             ...this.props.metricsReducer.collection[currentMetric],
             /* Metric selected in the previous screen */
             currentMetric,
-            today,
-            /* year and month showed on screen */
-            currentYear: today.getFullYear(),
-            currentMonth: today.getMonth() + 1,
+            /* year and month showed on screen, default today */
+            showingDate: moment(),
             /* Date Selected by the user in calendar, obj returned by calendar */
             selectedDate: undefined,
             showOverlay: false,
 
-            /* overlay input fields:*/
+            /* overlay input fields: */
             value: '',
             comments: '',
         };
@@ -55,15 +52,17 @@ class MetricDetailsScreen extends Component {
 
     pickDate = (dayObj) => {
         let metric = this.state.currentMetric;
-        let year = dayObj.year;
-        let month = dayObj.month.toString().padStart('2', '0');
-        let day = dayObj.day.toString().padStart('2', '0');
+        let year = dayObj.format('YYYY');
+        let month = dayObj.format('MM');
+        let day = dayObj.format('DD');
         let value = '';
         let comments = '';
+
         if (this.isValidReading(metric, year, month) && day in this.props.readingsReducer[metric][year][month]){
             value = this.props.readingsReducer[metric][year][month][day].value;
             comments = this.props.readingsReducer[metric][year][month][day].comments;
         }
+
         this.setState({
             showOverlay: true,
             selectedDate: dayObj,
@@ -76,7 +75,7 @@ class MetricDetailsScreen extends Component {
         this.props.addReading({
             currentMetric: this.state.currentMetric,
             value: this.state.value,
-            date: this.state.selectedDate.dateString,
+            date: this.state.selectedDate.format(),
             comments: this.state.comments,
             photo: '',
         });
@@ -90,7 +89,9 @@ class MetricDetailsScreen extends Component {
         });
     }
 
-    /* returns true if there's a registry for date */
+    /**
+     * Returns true if there's a registry for date
+    */
     isValidReading = (metric, year, month) => {
         if ((metric in this.props.readingsReducer) &&
         (year in this.props.readingsReducer[metric]) &&
@@ -102,19 +103,33 @@ class MetricDetailsScreen extends Component {
         }
     }
 
+    /**
+     * Get array of dates with data so we can display it correctly
+     * on calendar strip
+    */
     getMarkedDates = () => {
-        let year = this.state.currentYear;
-        let month = this.state.currentMonth;
+        let year = this.state.showingDate.format('YYYY');
+        let month = this.state.showingDate.format('MM');
         let metric = this.state.currentMetric;
 
         if (this.isValidReading(metric, year, month)){
-            let result = {};
+            let result = [];
             Object.keys(this.props.readingsReducer[metric][year][month]).forEach((el) => {
-                result[year + '-' + month + '-' + el] = {selected: true, selectedColor: '#069', };
+                let obj = {
+                    date: year + '-' + month + '-' + el,
+                    dots: [
+                        {
+                            color: '#069',
+                            selectedColor: '#069',
+                        },
+                    ],
+                };
+                result.push(obj);
+
             });
             return result;
         }
-        return {};
+        return [];
     }
 
     /**
@@ -122,8 +137,8 @@ class MetricDetailsScreen extends Component {
      * When there's no data available it returns an empty object
      */
     getMonhlyChartData = () => {
-        let year = this.state.currentYear;
-        let month = this.state.currentMonth;
+        let year = this.state.showingDate.format('YYYY');
+        let month = this.state.showingDate.format('MM');
         let metric = this.state.currentMetric;
 
         if (this.isValidReading(metric, year, month)){
@@ -131,14 +146,6 @@ class MetricDetailsScreen extends Component {
         }
         return {};
     }
-
-    onMonthChange = (month) => {
-        this.setState({
-            currentYear: month.year,
-            currentMonth: month.month.toString().padStart('2', '0'),
-        });
-    }
-
 
     render() {
         return (
@@ -148,24 +155,28 @@ class MetricDetailsScreen extends Component {
                     onBackdropPress={ () => this.setState({ showOverlay: false, }) }
                 >
                     <View>
-                        <Input name='value' value={this.state.value} label='Day Reading' placeholder='' onChange={this.handleChange} />
+                        <Input name='value' value={this.state.value} label='Day Reading' placeholder='' keyboardType='number-pad' onChange={this.handleChange} />
                         <Input name='comments' value={this.state.comments} placeholder='' label='Comments' onChange={this.handleChange} />
                         <Button title='Save' onPress={ this.onSave } />
                     </View>
                 </Overlay>
-                <View style={{alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
-                    <Text style={{color: '#666', marginTop: 5, fontSize: 18, fontWeight: 'bold', }}>{this.state.name}</Text>
+                <View>
+                    <CalendarStrip
+                        scrollable={true}
+                        style={{height:100, paddingTop: 10, paddingBottom: 10, }}
+                        onDateSelected={(dayObj) => this.pickDate(dayObj)}
+                        markedDates={this.getMarkedDates()}
+                        customDatesStyles={[
+                            {
+                                startDate: moment(),
+                                dateContainerStyle: { backgroundColor: '#ccc', },
+                            },
+                        ]}
+                    />
+                </View>
+                <View style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
                     <MonthlyChart color='#069' data={this.getMonhlyChartData()}/>
                     <Text style={{color: '#999', }}>My objective: {this.state.objective}</Text>
-                </View>
-                <View style={{flex: 1, paddingTop: 10, borderTopColor: '#ddd', borderTopWidth: 1, }}>
-                    <Calendar
-                        maxDate={this.state.today}
-                        onDayPress={(dayObj) => this.pickDate(dayObj)}
-                        hideExtraDays={true}
-                        markedDates={this.getMarkedDates()}
-                        onMonthChange={ (month) => this.onMonthChange(month) }
-                    />
                 </View>
                 <View style={{alignItems: 'center', padding: 20, }}>
                     <Text style={{color: '#999', }}>This objective was created on {Date(this.state.creationDate)}</Text>
