@@ -20,7 +20,7 @@ export default class MonthlyChart extends Component {
 
     static defaultProps = {
         width: Dimensions.get('window').width - 30,
-        height: 200,
+        height: 150,
         color: '#333',
     }
 

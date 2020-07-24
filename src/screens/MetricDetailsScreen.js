@@ -27,7 +27,7 @@ class MetricDetailsScreen extends Component {
             selectedDate: undefined,
             showOverlay: false,
             showAlert: false,
-
+            chartHeight: undefined,
             /* overlay input fields: */
             value: '',
             comments: '',
@@ -203,9 +203,14 @@ class MetricDetailsScreen extends Component {
                         ]}
                     />
                 </View>
-                <View style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
-                    <MonthlyChart color='#069' data={this.getMonhlyChartData()}/>
-                    <Text style={{color: '#999', }}>My objective: {this.state.objective}</Text>
+                <View
+                    onLayout={(event) => {
+                        this.setState({chartHeight: event.nativeEvent.layout.height - nm(50), });
+                        console.log(event.nativeEvent.layout);
+                    }}
+                    style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
+                    <MonthlyChart color='#069' data={this.getMonhlyChartData()} height={this.state.chartHeight} />
+                    <Text style={{color: '#999', }}>My goal: {this.state.objective}</Text>
                 </View>
                 <View style={{alignItems: 'center', padding: nm(20), }}>
                     <Button
