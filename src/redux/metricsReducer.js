@@ -7,15 +7,15 @@ const initialState = {
 export default function metricsReducer(state = initialState, action){
     switch (action.type){
         case ADD_METRIC: {
-            let index = state.total + 1;
+            let date = Date.now();
             return {
                 ...state,
-                total: index,
+                total: state.total + 1,
                 collection: {
                     ...state.collection,
-                    [index]: {
+                    [date]: {
                         name: action.payload.name,
-                        creationDate: Date.now(),
+                        creationDate: date,
                         objective: action.payload.objective,
                     },
                 },
@@ -23,8 +23,11 @@ export default function metricsReducer(state = initialState, action){
         }
         case DEL_METRIC:
             if (state.total >= 1) {
+                let stateCopy = Object.assign({}, state);
+                // delete from metrics, readings is called from saga
+                delete stateCopy.collection[action.payload.id];
                 return {
-                    ...state,
+                    ...stateCopy,
                     total: state.total - 1,
                 };
             }
@@ -45,8 +48,9 @@ export const addMetric = (obj) => {
     };
 };
 
-export const delMetric = () => {
+export const delMetric = (obj) => {
     return {
         type: DEL_METRIC,
+        payload: obj,
     };
 };

@@ -1,4 +1,4 @@
-import { ADD_READING, DEL_READING, DEL_ALL_READINGS } from './actions';
+import { ADD_READING, DEL_READING, DEL_ALL_METRIC_READINGS, DEL_ALL_READINGS } from './actions';
 import moment from 'moment';
 
 const initialState = {
@@ -50,6 +50,12 @@ export default function readingsReducer(state = initialState, action){
         case DEL_READING: {
             return state;
         }
+        case DEL_ALL_METRIC_READINGS: {
+            let stateCopy = Object.assign({}, state);
+            console.log(stateCopy);
+            delete stateCopy[action.payload.id];
+            return stateCopy;
+        }
         case DEL_ALL_READINGS:
             return initialState;
         default:
@@ -60,6 +66,13 @@ export default function readingsReducer(state = initialState, action){
 export const addReading = (obj) => {
     return {
         type: ADD_READING,
+        payload: obj,
+    };
+};
+
+export const delAllMetricReadings = (obj) => {
+    return {
+        type: DEL_ALL_METRIC_READINGS,
         payload: obj,
     };
 };

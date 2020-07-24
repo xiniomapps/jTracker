@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './src/utils/RootNavigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
@@ -34,7 +35,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
             <Tab.Navigator>
                 <Tab.Screen
                     name='My Metrics'
