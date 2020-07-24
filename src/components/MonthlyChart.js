@@ -58,7 +58,7 @@ export default class MonthlyChart extends Component {
                 width={this.props.width}
                 height={this.props.height}
                 yAxisLabel={''}
-                //fromZero={true}
+                fromZero={true}
                 chartConfig={{
                     backgroundColor: '#fff',
                     backgroundGradientFrom: this.props.color,
