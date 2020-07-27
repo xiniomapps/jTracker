@@ -4,18 +4,12 @@ import { LineChart } from 'react-native-chart-kit';
 import PropTypes from 'prop-types';
 
 export default class MonthlyChart extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-        };
-    }
-
     static propTypes = {
         width: PropTypes.number,
         height: PropTypes.number,
         color: PropTypes.string,
         data: PropTypes.object.isRequired,
+        metricSettings: PropTypes.object,
     }
 
     static defaultProps = {
@@ -58,7 +52,7 @@ export default class MonthlyChart extends Component {
                 width={this.props.width}
                 height={this.props.height}
                 yAxisLabel={''}
-                fromZero={true}
+                fromZero={this.props.metricSettings.fromZero}
                 chartConfig={{
                     backgroundColor: '#fff',
                     backgroundGradientFrom: this.props.color,

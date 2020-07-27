@@ -3,11 +3,13 @@ import { Text, View, FlatList } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { selectMetric } from '../redux/metricsReducer';
 
 class MetricsScreen extends Component {
 
     static propTypes = {
         metricsReducer: PropTypes.object,
+        selectMetric: PropTypes.func,
     }
 
     titleFormatter = (item) => {
@@ -49,6 +51,9 @@ class MetricsScreen extends Component {
     keyExtractor = (item, index) => index.toString();
 
     gotoItemDetails = (index) => {
+        this.props.selectMetric({
+            id: index,
+        });
         this.props.navigation.navigate('MetricDetailsScreen', {
             currentMetric: index,
         });
@@ -74,10 +79,18 @@ class MetricsScreen extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        selectMetric: obj => {
+            dispatch(selectMetric(obj));
+        },
+    };
+};
+
 const mapStateToProps = state => {
     return {
         metricsReducer: state.metrics,
     };
 };
 
-export default connect(mapStateToProps, null)(MetricsScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MetricsScreen);

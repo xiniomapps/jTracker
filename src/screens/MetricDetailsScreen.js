@@ -5,17 +5,17 @@ import PropTypes from 'prop-types';
 import {Overlay, Button, Icon} from 'react-native-elements';
 import Input from '../components/Input';
 import { addReading } from '../redux/readingsReducer';
-import { delMetric } from '../redux/metricsReducer';
 import MonthlyChart from '../components/MonthlyChart';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
-import AwesomeAlert from 'react-native-awesome-alerts';
+//import AwesomeAlert from 'react-native-awesome-alerts';
 import { nm } from '../styles/globalStyles';
 
 class MetricDetailsScreen extends Component {
     constructor(props) {
         super(props);
-        let currentMetric = this.props.route.params?.currentMetric ?? undefined;
+        /* Current selected metric is available at store */
+        let currentMetric = this.props.metricsReducer.selected;
 
         this.state = {
             ...this.props.metricsReducer.collection[currentMetric],
@@ -26,7 +26,6 @@ class MetricDetailsScreen extends Component {
             /* Date Selected by the user in calendar, obj returned by calendar */
             selectedDate: undefined,
             showOverlay: false,
-            showAlert: false,
             chartHeight: undefined,
             /* overlay input fields: */
             value: '',
@@ -40,6 +39,32 @@ class MetricDetailsScreen extends Component {
         addReading: PropTypes.func,
         route: PropTypes.any,
         delMetric: PropTypes.func,
+    }
+
+    /**
+     * Configure the Navigation Bar for this screen
+     */
+    componentDidMount = () => {
+        this.props.navigation.setOptions({
+            headerRight: () => {
+                return (
+                    <Icon
+                        onPress={() => {
+                            this.setState({
+                                settingsUpdated: false,
+                            }, () => {
+                                this.props.navigation.navigate('MetricSettingsScreen');
+                            });
+                        }}
+                        name='settings'
+                        type='material'
+                        size={nm(25)}
+                        color='#000'
+                        containerStyle={{marginRight: nm(10), }}
+                    />
+                );
+            },
+        });
     }
 
     handleChange = (inputName, inputValue) => {
@@ -152,33 +177,23 @@ class MetricDetailsScreen extends Component {
         return {};
     }
 
-    deleteMetric = () => {
-        this.setState({
-            showAlert: false,
-        }, () => {
-            this.props.delMetric({
-                id: this.state.currentMetric,
+    /**
+     * Everytime we come to this screen we need to check if there was a
+     * settings change so we can update our chart
+     */
+    componentDidUpdate() {
+        let settingsUpdated = this.props.route.params?.settingsUpdated ?? false;
+        if (settingsUpdated){
+            this.props.route.params.settingsUpdated = undefined;
+            this.setState({
+                ...this.props.metricsReducer.collection[this.state.currentMetric],
             });
-        });
+        }
     }
 
     render() {
         return (
             <View style={{flex: 1, }}>
-                <AwesomeAlert
-                    show={this.state.showAlert}
-                    title='Delete Metric'
-                    message='Are you sure you want to delete this metric? This action cannot be undone'
-                    showCancelButton={true}
-                    cancelText='Cancel'
-                    onCancelPressed={ () => {
-                        this.setState({showAlert: false, });
-                    }}
-                    showConfirmButton={true}
-                    confirmButtonColor='#a62700'
-                    confirmText='Yes, delete it'
-                    onConfirmPressed={this.deleteMetric}
-                />
                 <Overlay
                     isVisible={this.state.showOverlay}
                     onBackdropPress={ () => this.setState({ showOverlay: false, }) }
@@ -206,27 +221,13 @@ class MetricDetailsScreen extends Component {
                 <View
                     onLayout={(event) => {
                         this.setState({chartHeight: event.nativeEvent.layout.height - nm(50), });
-                        console.log(event.nativeEvent.layout);
                     }}
                     style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
-                    <MonthlyChart color='#069' data={this.getMonhlyChartData()} height={this.state.chartHeight} />
+                    <MonthlyChart color='#069' data={this.getMonhlyChartData()} height={this.state.chartHeight} metricSettings={this.state.settings} />
                     <Text style={{color: '#999', }}>My goal: {this.state.objective}</Text>
                 </View>
                 <View style={{alignItems: 'center', padding: nm(20), }}>
-                    <Button
-                        title='Delete this metric'
-                        containerStyle={{marginBottom: nm(10), }}
-                        buttonStyle={{backgroundColor: '#a62700', }}
-                        titleStyle={{fontSize: nm(11), }}
-                        onPress={ () => {
-                            this.setState({ showAlert: true, });
-                        }}
-                        icon={
-                            <Icon name='delete-outline' type='material-community' size={nm(15)} color='#fff' />
-                        }
-                    />
                     <Text style={{color: '#999', fontSize: nm(8), }}>This objective was created on {Date(this.state.creationDate)}</Text>
-
                 </View>
             </View>
         );
@@ -237,9 +238,6 @@ const mapDispatchToProps = dispatch => {
     return {
         addReading: obj => {
             dispatch(addReading(obj));
-        },
-        delMetric: obj => {
-            dispatch(delMetric(obj));
         },
     };
 };

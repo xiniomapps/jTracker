@@ -1,7 +1,20 @@
-import {ADD_METRIC, DEL_METRIC, DEL_ALL_METRICS} from './actions';
+import {
+    ADD_METRIC,
+    DEL_METRIC,
+    DEL_ALL_METRICS,
+    SELECT_METRIC,
+    SAVE_METRIC_SETTINGS
+} from './actions';
+
 const initialState = {
     total: 0,
+    selected: null,
     collection: {},
+};
+
+const defaultSettings = {
+    /** allow charts to start from zero */
+    fromZero: false,
 };
 
 export default function metricsReducer(state = initialState, action){
@@ -17,6 +30,7 @@ export default function metricsReducer(state = initialState, action){
                         name: action.payload.name,
                         creationDate: date,
                         objective: action.payload.objective,
+                        settings: defaultSettings,
                     },
                 },
             };
@@ -36,6 +50,16 @@ export default function metricsReducer(state = initialState, action){
             }
         case DEL_ALL_METRICS:
             return initialState;
+        case SELECT_METRIC:
+            return {
+                ...state,
+                selected: action.payload.id,
+            };
+        case SAVE_METRIC_SETTINGS: {
+            let stateCopy = Object.assign({}, state);
+            stateCopy.collection[action.payload.id].settings = action.payload.settings;
+            return stateCopy;
+        }
         default:
             return state;
     }
@@ -51,6 +75,20 @@ export const addMetric = (obj) => {
 export const delMetric = (obj) => {
     return {
         type: DEL_METRIC,
+        payload: obj,
+    };
+};
+
+export const selectMetric = (obj) => {
+    return {
+        type: SELECT_METRIC,
+        payload: obj,
+    };
+};
+
+export const saveMetricSettings = (obj) => {
+    return {
+        type: SAVE_METRIC_SETTINGS,
         payload: obj,
     };
 };
