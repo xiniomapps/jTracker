@@ -46,6 +46,7 @@ class MetricDetailsScreen extends Component {
      */
     componentDidMount = () => {
         this.props.navigation.setOptions({
+            title: this.state.name,
             headerRight: () => {
                 return (
                     <Icon

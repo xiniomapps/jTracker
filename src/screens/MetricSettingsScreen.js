@@ -13,6 +13,7 @@ class MetricSettingsScreen extends Component {
         super(props);
         this.state = {
             currentMetric: this.props.metricsReducer.selected,
+            ...this.props.metricsReducer.collection[this.props.metricsReducer.selected],
             showAlert: false,
             settings: this.props.metricsReducer.collection[this.props.metricsReducer.selected].settings,
             //settingsUpdated: false,
@@ -49,6 +50,7 @@ class MetricSettingsScreen extends Component {
     */
     modifyHeaderLeftAction = (settingsUpdated) => {
         this.props.navigation.setOptions({
+            title: this.state.name + ' Settings',
             headerLeft: (props) => {
                 return (
                     <HeaderBackButton

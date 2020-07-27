@@ -19,7 +19,7 @@ function MetricsStackScreen() {
             <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'My Metrics', }} />
             <MetricsStack.Screen name='addMetricScreen' component={addMetricScreen} options={{ title: 'Add New Metric', }}/>
             <MetricsStack.Screen name='MetricDetailsScreen' component={MetricDetailsScreen} options={{ title: 'Metric Details', }}/>
-            <MetricsStack.Screen name='MetricSettingsScreen' component={MetricSettingsScreen} options={{ title: 'Settings', }} />
+            <MetricsStack.Screen name='MetricSettingsScreen' component={MetricSettingsScreen} />
         </MetricsStack.Navigator>
     );
 }
