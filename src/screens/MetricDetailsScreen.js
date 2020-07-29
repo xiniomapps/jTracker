@@ -225,10 +225,10 @@ class MetricDetailsScreen extends Component {
                     }}
                     style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
                     <MonthlyChart color='#069' data={this.getMonhlyChartData()} height={this.state.chartHeight} metricSettings={this.state.settings} />
-                    <Text style={{color: '#999', }}>My goal: {this.state.objective}</Text>
+                    <Text style={{color: '#999', }}>My goal: {this.state.goal} {this.state.units}</Text>
                 </View>
                 <View style={{alignItems: 'center', padding: nm(20), }}>
-                    <Text style={{color: '#999', fontSize: nm(8), }}>This objective was created on {Date(this.state.creationDate)}</Text>
+                    <Text style={{color: '#999', fontSize: nm(8), }}>This goal was created on {Date(this.state.creationDate)}</Text>
                 </View>
             </View>
         );

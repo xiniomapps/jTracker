@@ -20,7 +20,7 @@ class MetricsScreen extends Component {
                     <Icon
                         type='material'
                         name='add'
-                        onPress={ () => this.props.navigation.navigate('addMetricScreen')}
+                        onPress={ () => this.props.navigation.navigate('AddMetricScreen')}
                         size={nm(25)}
                         color='#000'
                         containerStyle={{marginRight: nm(10), }}
@@ -41,7 +41,7 @@ class MetricsScreen extends Component {
     subtitleFormatter = (item) => {
         return (
             <Text style={{color: '#999', }}>
-                Goal: {this.props.metricsReducer.collection[item].objective}
+                Goal: {this.props.metricsReducer.collection[item].goal}
             </Text>
         );
     }

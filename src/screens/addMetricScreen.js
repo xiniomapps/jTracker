@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {addMetric} from '../redux/metricsReducer';
 import Input from '../components/Input';
+import { nm } from '../styles/globalStyles';
 
-class addMetricScreen extends Component {
+class AddMetricScreen extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             name: '',
-            objective: '',
+            goal: '',
+            units: '',
+            reasons: '',
         };
     }
 
@@ -33,11 +36,48 @@ class addMetricScreen extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Nueva Métrica </Text>
-                <Input name='name' value={this.state.name} label='Nombre' placeholder='' onChange={this.handleChange} />
-                <Input name='objective' value={this.state.objective} placeholder='' label='Objetivo' onChange={this.handleChange} />
-                <Button title='Guardar' onPress={this.onSave}/>
+            <View style={{flex:1, flexDirection: 'column', }}>
+                <View style={{flex: 1, marginVertical: nm(15), marginHorizontal: nm(20), }}>
+                    <Input
+                        name='name'
+                        label='Name'
+                        value={this.state.name}
+                        placeholder='e.g. Weight'
+                        onChange={this.handleChange}
+                    />
+                    <Input
+                        name='goal'
+                        label='Goal Value'
+                        value={this.state.goal}
+                        placeholder='e.g. 90'
+                        onChange={this.handleChange}
+                        keyboardType='number-pad'
+                    />
+                    <Input
+                        name='units'
+                        label='Units'
+                        placeholder='e.g. Kg (Optional)'
+                        onChange={this.handleChange}
+                    />
+                    <Input
+                        name='reasons'
+                        label='My Reasons'
+                        placeholder='Why are you tracking this (Freeform)'
+                        onChange={this.handleChange}
+                        multiline
+                        numberOfLines={3}
+                    />
+                </View>
+                <View>
+                    <Button
+                        buttonStyle={{backgroundColor: '#069', }}
+                        titleStyle={{color: '#fff', }}
+                        containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
+                        type='outline'
+                        title='Guardar' onPress={this.onSave}
+                        raised
+                    />
+                </View>
             </View>
         );
     }
@@ -52,4 +92,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 //--------| Conecta el componente con el store
-export default connect(null, mapDispatchToProps)(addMetricScreen);
+export default connect(null, mapDispatchToProps)(AddMetricScreen);

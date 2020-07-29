@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 
 import MetricsScreen from './src/screens/MetricsScreen';
-import addMetricScreen from './src/screens/addMetricScreen';
+import AddMetricScreen from './src/screens/AddMetricScreen';
 import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
@@ -17,7 +17,7 @@ function MetricsStackScreen() {
     return (
         <MetricsStack.Navigator>
             <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'jTracker', }} />
-            <MetricsStack.Screen name='addMetricScreen' component={addMetricScreen} options={{ title: 'Add New Metric', }}/>
+            <MetricsStack.Screen name='AddMetricScreen' component={AddMetricScreen} options={{ title: 'New Metric', }}/>
             <MetricsStack.Screen name='MetricDetailsScreen' component={MetricDetailsScreen} options={{ title: 'Metric Details', }}/>
             <MetricsStack.Screen name='MetricSettingsScreen' component={MetricSettingsScreen} />
         </MetricsStack.Navigator>

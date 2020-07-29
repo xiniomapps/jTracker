@@ -29,7 +29,9 @@ export default function metricsReducer(state = initialState, action){
                     [date]: {
                         name: action.payload.name,
                         creationDate: date,
-                        objective: action.payload.objective,
+                        goal: action.payload.goal,
+                        units: action.payload.units,
+                        reasons: action.payload.reasons,
                         settings: defaultSettings,
                     },
                 },
