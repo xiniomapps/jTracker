@@ -16,7 +16,7 @@ const MetricsStack = createStackNavigator();
 function MetricsStackScreen() {
     return (
         <MetricsStack.Navigator>
-            <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'My Metrics', }} />
+            <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'jTracker', }} />
             <MetricsStack.Screen name='addMetricScreen' component={addMetricScreen} options={{ title: 'Add New Metric', }}/>
             <MetricsStack.Screen name='MetricDetailsScreen' component={MetricDetailsScreen} options={{ title: 'Metric Details', }}/>
             <MetricsStack.Screen name='MetricSettingsScreen' component={MetricSettingsScreen} />

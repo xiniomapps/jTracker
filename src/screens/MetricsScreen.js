@@ -4,6 +4,7 @@ import { Icon, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { selectMetric } from '../redux/metricsReducer';
+import { nm } from '../styles/globalStyles';
 
 class MetricsScreen extends Component {
 
@@ -12,9 +13,26 @@ class MetricsScreen extends Component {
         selectMetric: PropTypes.func,
     }
 
+    componentDidMount = () => {
+        this.props.navigation.setOptions({
+            headerRight: () => {
+                return (
+                    <Icon
+                        type='material'
+                        name='add'
+                        onPress={ () => this.props.navigation.navigate('addMetricScreen')}
+                        size={nm(25)}
+                        color='#000'
+                        containerStyle={{marginRight: nm(10), }}
+                    />
+                );
+            },
+        });
+    }
+
     titleFormatter = (item) => {
         return (
-            <Text>
+            <Text style={{fontWeight: 'bold', }}>
                 {this.props.metricsReducer.collection[item].name}
             </Text>
         );
@@ -23,7 +41,7 @@ class MetricsScreen extends Component {
     subtitleFormatter = (item) => {
         return (
             <Text style={{color: '#999', }}>
-                Objetivo: {this.props.metricsReducer.collection[item].objective}
+                Goal: {this.props.metricsReducer.collection[item].objective}
             </Text>
         );
     }
@@ -39,9 +57,9 @@ class MetricsScreen extends Component {
                 leftIcon={
                     <Icon
                         type='material-community'
-                        name='chart-line'
-                        size={50}
-                        color='red'
+                        name='chart-areaspline'
+                        size={nm(25)}
+                        color='#006699'
                     />
                 }
             />
@@ -62,13 +80,6 @@ class MetricsScreen extends Component {
     render() {
         return (
             <View>
-                <Icon
-                    type='material'
-                    name='add'
-                    color='red'
-                    reverse
-                    onPress={ () => this.props.navigation.navigate('addMetricScreen')}
-                />
                 <FlatList
                     data={Object.keys(this.props.metricsReducer.collection)}
                     renderItem={ (item) => this.renderItem(item) }
