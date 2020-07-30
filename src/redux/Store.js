@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import rootSaga from '../sagas/rootSaga';
 import metricsReducer from './metricsReducer';
 import readingsReducer from '../redux/readingsReducer';
-
+import userSettingsReducer from '../redux/userSettingsReducer';
 
 const persistedReducer = persistReducer(
     {
@@ -19,6 +19,7 @@ const persistedReducer = persistReducer(
         // Reductores
         metrics: metricsReducer,
         readings: readingsReducer,
+        userSettings: userSettingsReducer,
     })
 );
 

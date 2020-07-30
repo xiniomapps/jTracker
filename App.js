@@ -11,7 +11,20 @@ import AddMetricScreen from './src/screens/AddMetricScreen';
 import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
+import UserSettingsScreen from './src/screens/UserSettingsScreen';
 import { nm } from './src/styles/globalStyles';
+
+const UserSettingsStack = createStackNavigator();
+function UserSettingsStackScreen(){
+    return (
+        <UserSettingsStack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: '#069', },
+            headerTintColor: '#fff',
+        }}>
+            <MetricsStack.Screen name='User Settings' component={UserSettingsScreen} />
+        </UserSettingsStack.Navigator>
+    );
+}
 
 const MetricsStack = createStackNavigator();
 function MetricsStackScreen() {
@@ -54,6 +67,16 @@ export default function App() {
                     showLabel: false,
                 }}
             >
+                <Tab.Screen
+                    name='User'
+                    component={UserSettingsStackScreen}
+                    options={{
+                        // eslint-disable-next-line react/display-name, react/prop-types
+                        tabBarIcon: ({color, }) => (
+                            <Icon type='material' name='person' color={color} size={nm(20)}/>
+                        ),
+                    }}
+                />
                 <Tab.Screen
                     name='My Metrics'
                     component={MetricsStackScreen}
