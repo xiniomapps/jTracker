@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {addMetric} from '../redux/metricsReducer';
@@ -70,12 +70,16 @@ class AddMetricScreen extends Component {
                 </View>
                 <View>
                     <Button
+                        title='Save'
                         buttonStyle={{backgroundColor: '#009933', }}
                         titleStyle={{color: '#fff', }}
                         containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
                         type='outline'
-                        title='Guardar' onPress={this.onSave}
                         raised
+                        onPress={this.onSave}
+                        icon={
+                            <Icon name='content-save' type='material-community' size={nm(15)} color='#fff' style={{marginRight: 10, }} />
+                        }
                     />
                 </View>
             </View>

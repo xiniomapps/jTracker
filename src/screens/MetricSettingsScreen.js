@@ -81,7 +81,7 @@ class MetricSettingsScreen extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex:1, flexDirection: 'column', }}>
                 <AwesomeAlert
                     show={this.state.showAlert}
                     title='Delete Metric'
@@ -92,25 +92,31 @@ class MetricSettingsScreen extends Component {
                         this.setState({showAlert: false, });
                     }}
                     showConfirmButton={true}
-                    confirmButtonColor='#a62700'
+                    confirmButtonColor='#990d00'
                     confirmText='Yes, delete it'
                     onConfirmPressed={this.deleteMetric}
                 />
-                <CheckBox title='Chart starts from zero' checked={this.state.settings.fromZero}
-                    onPress={this.toggleFromZero}
-                />
-                <Button
-                    title='Delete this metric'
-                    containerStyle={{marginBottom: nm(10), }}
-                    buttonStyle={{backgroundColor: '#a62700', }}
-                    titleStyle={{fontSize: nm(11), }}
-                    onPress={ () => {
-                        this.setState({ showAlert: true, });
-                    }}
-                    icon={
-                        <Icon name='delete-outline' type='material-community' size={nm(15)} color='#fff' />
-                    }
-                />
+                <View style={{flex: 1, marginVertical: nm(15), marginHorizontal: nm(20), }}>
+                    <CheckBox title='Chart starts from zero' checked={this.state.settings.fromZero}
+                        onPress={this.toggleFromZero}
+                    />
+                </View>
+                <View>
+                    <Button
+                        title='Delete this metric'
+                        buttonStyle={{backgroundColor: '#990d00', }}
+                        titleStyle={{color: '#fff', }}
+                        containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
+                        type='outline'
+                        raised
+                        onPress={ () => {
+                            this.setState({ showAlert: true, });
+                        }}
+                        icon={
+                            <Icon name='delete-outline' type='material-community' size={nm(15)} color='#fff' style={{marginRight: 10, }}/>
+                        }
+                    />
+                </View>
             </View>
         );
     }
