@@ -224,6 +224,7 @@ class MetricDetailsScreen extends Component {
                         this.setState({chartHeight: event.nativeEvent.layout.height - nm(50), });
                     }}
                     style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
+                    <Text style={{color: '#999', fontWeight: 'bold', fontSize: nm(14), }}>{this.state.reasons}</Text>
                     <MonthlyChart color='#069' data={this.getMonhlyChartData()} height={this.state.chartHeight} metricSettings={this.state.settings} />
                     <Text style={{color: '#999', }}>My goal: {this.state.goal} {this.state.units}</Text>
                 </View>
