@@ -34,7 +34,7 @@ function MetricsStackScreen() {
                 headerStyle: { backgroundColor: '#069', },
                 headerTintColor: '#fff',
             }}>
-            <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'jTracker', }} />
+            <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'My Metrics', }} />
             <MetricsStack.Screen name='AddMetricScreen' component={AddMetricScreen} options={{ title: 'New Metric', }}/>
             <MetricsStack.Screen name='MetricDetailsScreen' component={MetricDetailsScreen} options={{ title: 'Metric Details', }}/>
             <MetricsStack.Screen name='MetricSettingsScreen' component={MetricSettingsScreen} />
