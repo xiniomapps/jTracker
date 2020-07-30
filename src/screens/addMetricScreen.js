@@ -70,7 +70,7 @@ class AddMetricScreen extends Component {
                 </View>
                 <View>
                     <Button
-                        buttonStyle={{backgroundColor: '#069', }}
+                        buttonStyle={{backgroundColor: '#009933', }}
                         titleStyle={{color: '#fff', }}
                         containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
                         type='outline'

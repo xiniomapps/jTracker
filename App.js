@@ -11,11 +11,16 @@ import AddMetricScreen from './src/screens/AddMetricScreen';
 import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
+import { nm } from './src/styles/globalStyles';
 
 const MetricsStack = createStackNavigator();
 function MetricsStackScreen() {
     return (
-        <MetricsStack.Navigator>
+        <MetricsStack.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: '#069', },
+                headerTintColor: '#fff',
+            }}>
             <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'jTracker', }} />
             <MetricsStack.Screen name='AddMetricScreen' component={AddMetricScreen} options={{ title: 'New Metric', }}/>
             <MetricsStack.Screen name='MetricDetailsScreen' component={MetricDetailsScreen} options={{ title: 'Metric Details', }}/>
@@ -27,7 +32,10 @@ function MetricsStackScreen() {
 const AboutStack = createStackNavigator();
 function AboutStackScreen(){
     return (
-        <AboutStack.Navigator>
+        <AboutStack.Navigator screenOptions={{
+            headerStyle: { backgroundColor: '#069', },
+            headerTintColor: '#fff',
+        }}>
             <MetricsStack.Screen name='About' component={AboutScreen} />
         </AboutStack.Navigator>
     );
@@ -38,14 +46,21 @@ const Tab = createBottomTabNavigator();
 export default function App() {
     return (
         <NavigationContainer ref={navigationRef}>
-            <Tab.Navigator>
+            <Tab.Navigator
+                tabBarOptions={{
+                    style: { backgroundColor: '#069', },
+                    activeTintColor: '#fff',
+                    inactiveTintColor: '#aaa',
+                    showLabel: false,
+                }}
+            >
                 <Tab.Screen
                     name='My Metrics'
                     component={MetricsStackScreen}
                     options={{
-                        // eslint-disable-next-line react/display-name
-                        tabBarIcon: () => (
-                            <Icon type='material-community' name='chart-line'/>
+                        // eslint-disable-next-line react/display-name, react/prop-types
+                        tabBarIcon: ({color, }) => (
+                            <Icon type='material-community' name='chart-timeline-variant' color={color} size={nm(20)}/>
                         ),
                     }}
                 />
@@ -53,9 +68,9 @@ export default function App() {
                     name='About'
                     component={AboutStackScreen}
                     options={{
-                        // eslint-disable-next-line react/display-name
-                        tabBarIcon: () => (
-                            <Icon type='material-community' name='information-outline'/>
+                        // eslint-disable-next-line react/display-name, react/prop-types
+                        tabBarIcon: ({color, }) => (
+                            <Icon type='material-community' name='information-outline' color={color} size={nm(20)}/>
                         ),
                     }}
                 />

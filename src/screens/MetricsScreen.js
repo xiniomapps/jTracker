@@ -22,7 +22,7 @@ class MetricsScreen extends Component {
                         name='add'
                         onPress={ () => this.props.navigation.navigate('AddMetricScreen')}
                         size={nm(25)}
-                        color='#000'
+                        color='#fff'
                         containerStyle={{marginRight: nm(10), }}
                     />
                 );

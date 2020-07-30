@@ -60,7 +60,7 @@ class MetricDetailsScreen extends Component {
                         name='settings'
                         type='material'
                         size={nm(25)}
-                        color='#000'
+                        color='#fff'
                         containerStyle={{marginRight: nm(10), }}
                     />
                 );
