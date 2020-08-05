@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {saveUserSettings} from '../redux/userSettingsReducer';
@@ -29,7 +29,7 @@ class UserSettingsScreen extends Component {
 
     render() {
         return (
-            <View style={{flex:1, flexDirection: 'column', }}>
+            <ScrollView style={{flex:1, flexDirection: 'column', }} keyboardShouldPersistTaps='never'>
                 <View style={{flex: 1, marginVertical: nm(15), marginHorizontal: nm(20), }}>
                     <Input
                         name='name'
@@ -39,7 +39,7 @@ class UserSettingsScreen extends Component {
                         onChange={this.handleChange}
                     />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
