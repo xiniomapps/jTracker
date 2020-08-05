@@ -68,22 +68,22 @@ export default function App() {
                 }}
             >
                 <Tab.Screen
-                    name='User'
-                    component={UserSettingsStackScreen}
-                    options={{
-                        // eslint-disable-next-line react/display-name, react/prop-types
-                        tabBarIcon: ({color, }) => (
-                            <Icon type='material' name='person' color={color} size={nm(20)}/>
-                        ),
-                    }}
-                />
-                <Tab.Screen
                     name='My Metrics'
                     component={MetricsStackScreen}
                     options={{
                         // eslint-disable-next-line react/display-name, react/prop-types
                         tabBarIcon: ({color, }) => (
                             <Icon type='material-community' name='chart-timeline-variant' color={color} size={nm(20)}/>
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name='User'
+                    component={UserSettingsStackScreen}
+                    options={{
+                        // eslint-disable-next-line react/display-name, react/prop-types
+                        tabBarIcon: ({color, }) => (
+                            <Icon type='material' name='person' color={color} size={nm(20)}/>
                         ),
                     }}
                 />
