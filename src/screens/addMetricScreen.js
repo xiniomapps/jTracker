@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -36,7 +36,7 @@ class AddMetricScreen extends Component {
 
     render() {
         return (
-            <View style={{flex:1, flexDirection: 'column', }}>
+            <ScrollView style={{flex:1, flexDirection: 'column', }} keyboardShouldPersistTaps='never'>
                 <View style={{flex: 1, marginVertical: nm(15), marginHorizontal: nm(20), }}>
                     <Input
                         name='name'
@@ -82,7 +82,7 @@ class AddMetricScreen extends Component {
                         }
                     />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
