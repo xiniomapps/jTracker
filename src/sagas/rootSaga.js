@@ -1,7 +1,8 @@
 
 import { all, takeEvery, select, put } from 'redux-saga/effects';
-import {INIT_APP, DEL_METRIC} from '../redux/actions';
+import {INIT_APP, DEL_METRIC, ADD_READING} from '../redux/actions';
 import {delAllMetricReadings} from '../redux/readingsReducer';
+import {updateMetricMinReading} from '../redux/metricsReducer';
 import * as RootNavigation from '../utils/RootNavigation';
 
 export default function *rootSaga() {
@@ -9,6 +10,7 @@ export default function *rootSaga() {
         watchAndLog(),
         initAppWatcher(),
         delMetricWatcher(),
+        addReadingWatcher(),
     ]);
 }
 
@@ -42,4 +44,20 @@ function* delMetricWorker(action){
     }));
 
     yield RootNavigation.navigate('MetricsScreen');
+}
+
+/**
+ * Watch for new readings
+ */
+function* addReadingWatcher(){
+    yield takeEvery([ADD_READING, ], addReadingWorker);
+}
+
+function* addReadingWorker(action){
+    const state = yield select();
+    yield put(updateMetricMinReading({
+        id: action.payload.currentMetric,
+        currentDate: state.metrics.collection[action.payload.currentMetric].minReading,
+        newDate: action.payload.date,
+    }));
 }

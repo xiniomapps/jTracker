@@ -8,7 +8,7 @@ export default class MonthlyChart extends Component {
         width: PropTypes.number,
         height: PropTypes.number,
         color: PropTypes.string,
-        data: PropTypes.object.isRequired,
+        data: PropTypes.array.isRequired,
         metricSettings: PropTypes.object,
     }
 
@@ -18,34 +18,12 @@ export default class MonthlyChart extends Component {
         color: '#333',
     }
 
-    /**
-     * Transforms the data coming from the parent which is in
-     * our store format and generate a new object as required for the
-     * LineChart component
-     */
-    transformPropsData = () => {
-        let result = [];
-        // get sortedKeys array and create the new array with data
-        Object.keys(this.props.data).sort().forEach(el => {
-            result.push(parseFloat(this.props.data[el].value));
-        });
-        return { data: result, };
-    }
-
     renderChart() {
         return (
             <LineChart
                 data={{
-                    labels: [
-                        //'01', '', '', '',
-                        //'05', '', '', '', '',
-                        //'10', '', '', '', '',
-                        //'15', '', '', '', '',
-                        //'20', '', '', '', '',
-                        //'25', '', '', '', '',
-                        //'30',
-                    ],
-                    datasets: [ this.transformPropsData(), ],
+                    labels: [],
+                    datasets: [ {data: this.props.data, }, ],
                 }}
                 withInnerLines={false}
                 verticalLabelRotation={315}

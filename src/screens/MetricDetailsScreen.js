@@ -8,7 +8,6 @@ import { addReading } from '../redux/readingsReducer';
 import MonthlyChart from '../components/MonthlyChart';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
-//import AwesomeAlert from 'react-native-awesome-alerts';
 import { nm } from '../styles/globalStyles';
 
 class MetricDetailsScreen extends Component {
@@ -30,6 +29,10 @@ class MetricDetailsScreen extends Component {
             /* overlay input fields: */
             value: '',
             comments: '',
+            /* array containing data for generating our chart */
+            readingsForChart: [],
+            /* array containing selected dates for showing in calendar strip */
+            markedDatesForStrip: [],
         };
     }
 
@@ -41,10 +44,11 @@ class MetricDetailsScreen extends Component {
         delMetric: PropTypes.func,
     }
 
-    /**
-     * Configure the Navigation Bar for this screen
-     */
     componentDidMount = () => {
+        // Init our data for chart and calendar strip:
+        this.setReadingsData();
+
+        // Config navigation:
         this.props.navigation.setOptions({
             title: this.state.name,
             headerRight: () => {
@@ -68,19 +72,21 @@ class MetricDetailsScreen extends Component {
         });
     }
 
+    /**
+     * Handles the change  value for any field of overlay
+     * @param {*} inputName Name of the field
+     * @param {*} inputValue value of the field
+     */
     handleChange = (inputName, inputValue) => {
         this.setState({
             [inputName]: inputValue,
         });
     }
 
-    getReadings = () => {
-        if (this.state.currentMetric in this.props.readingsReducer){
-            return this.props.readingsReducer[this.state.currentMetric];
-        }
-        return {};
-    }
-
+    /**
+      * Opens overlay for adding a new reading
+      * @param {*} dayObj obj with the selected date
+      */
     pickDate = (dayObj) => {
         let metric = this.state.currentMetric;
         let year = dayObj.format('YYYY');
@@ -102,11 +108,16 @@ class MetricDetailsScreen extends Component {
         });
     }
 
-    onSave = () => {
+    /**
+     * Action for the save button when adding new reading
+     * Adds the reading to the store, hides the overlay and
+     * updates chart data
+     */
+    onReadingSave = () => {
         this.props.addReading({
             currentMetric: this.state.currentMetric,
             value: this.state.value,
-            date: this.state.selectedDate.format(),
+            date: this.state.selectedDate.valueOf(),
             comments: this.state.comments,
             photo: '',
         });
@@ -117,7 +128,7 @@ class MetricDetailsScreen extends Component {
             value: '',
             comments: '',
             photo: '',
-        });
+        }, () => this.setReadingsData());
     }
 
     /**
@@ -135,49 +146,65 @@ class MetricDetailsScreen extends Component {
     }
 
     /**
-     * Get array of dates with data so we can display it correctly
-     * on calendar strip
-    */
-    getMarkedDates = () => {
-        let year = this.state.showingDate.format('YYYY');
-        let month = this.state.showingDate.format('MM');
-        let metric = this.state.currentMetric;
+     * Gets all data from the first reading to today
+     */
+    setReadingsData = () => {
+        let dateRange = {
+            currentMetric: this.state.currentMetric,
+            readings: this.props.readingsReducer,
+            start: moment(this.props.metricsReducer.collection[this.state.currentMetric].minReading),
+            end: moment(),
 
-        if (this.isValidReading(metric, year, month)){
-            let result = [];
-            Object.keys(this.props.readingsReducer[metric][year][month]).forEach((el) => {
-                let obj = {
-                    date: year + '-' + month + '-' + el,
+            [Symbol.iterator](){
+                this.current = this.start;
+                this.dayCount = 1;
+                return this;
+            },
+            next(){
+                if (this.current.isSameOrBefore(this.end)){
+                    let copy = this.current.clone();
+                    this.current.add(1, 'days');
+                    let currentVal =this.readings[this.currentMetric][copy.format('YYYY')][copy.format('MM')][copy.format('DD')];
+                    let reading = 0;
+                    if (currentVal){
+                        reading = parseInt(currentVal.value);
+                    }
+
+                    return {
+                        value: {
+                            date: copy.format('YYYY-MM-DD'),
+                            value: reading,
+                        },
+                    };
+                }
+                else {
+                    return { done: true, };
+                }
+            },
+        };
+        let readingsArray = [];
+        let markedDatesArray = [];
+
+        for (let reading of dateRange){
+            readingsArray.push(reading.value);
+            if (reading.value != 0){
+                markedDatesArray.push({
+                    date: reading.date,
                     dots: [
                         {
                             color: '#069',
                             selectedColor: '#069',
                         },
                     ],
-                };
-                result.push(obj);
-
-            });
-            return result;
+                });
+            }
         }
-        return [];
+
+        this.setState({
+            readingsForChart: readingsArray,
+            markedDatesForStrip: markedDatesArray,
+        });
     }
-
-    /**
-     * Gets the current month readings object from the redux store
-     * When there's no data available it returns an empty object
-     */
-    getMonhlyChartData = () => {
-        let year = this.state.showingDate.format('YYYY');
-        let month = this.state.showingDate.format('MM');
-        let metric = this.state.currentMetric;
-
-        if (this.isValidReading(metric, year, month)){
-            return this.props.readingsReducer[metric][year][month];
-        }
-        return {};
-    }
-
     /**
      * Everytime we come to this screen we need to check if there was a
      * settings change so we can update our chart
@@ -202,7 +229,7 @@ class MetricDetailsScreen extends Component {
                     <View>
                         <Input name='value' value={this.state.value} label='Day Reading' placeholder='' keyboardType='number-pad' onChange={this.handleChange} />
                         <Input name='comments' value={this.state.comments} placeholder='' label='Comments' onChange={this.handleChange} />
-                        <Button title='Save' onPress={ this.onSave } />
+                        <Button title='Save' onPress={ this.onReadingSave } />
                     </View>
                 </Overlay>
                 <View>
@@ -210,7 +237,7 @@ class MetricDetailsScreen extends Component {
                         scrollable={true}
                         style={{height:100, paddingTop: 10, paddingBottom: 10, }}
                         onDateSelected={(dayObj) => this.pickDate(dayObj)}
-                        markedDates={this.getMarkedDates()}
+                        markedDates={this.state.markedDatesForStrip}
                         customDatesStyles={[
                             {
                                 startDate: moment(),
@@ -225,7 +252,7 @@ class MetricDetailsScreen extends Component {
                     }}
                     style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
                     <Text style={{color: '#999', fontWeight: 'bold', fontSize: nm(14), }}>{this.state.reasons}</Text>
-                    <MonthlyChart color='#069' data={this.getMonhlyChartData()} height={this.state.chartHeight} metricSettings={this.state.settings} />
+                    <MonthlyChart color='#069' data={this.state.readingsForChart} height={this.state.chartHeight} metricSettings={this.state.settings} />
                     <Text style={{color: '#999', }}>My goal: {this.state.goal} {this.state.units}</Text>
                 </View>
                 <View style={{alignItems: 'center', padding: nm(20), }}>
