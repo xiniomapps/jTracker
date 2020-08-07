@@ -52,7 +52,6 @@ export default function readingsReducer(state = initialState, action){
         }
         case DEL_ALL_METRIC_READINGS: {
             let stateCopy = Object.assign({}, state);
-            console.log(stateCopy);
             delete stateCopy[action.payload.id];
             return stateCopy;
         }

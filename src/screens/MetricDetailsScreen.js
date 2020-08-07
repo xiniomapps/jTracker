@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Overlay, Button, Icon} from 'react-native-elements';
-import Input from '../components/Input';
-import { addReading } from '../redux/readingsReducer';
+import {Icon} from 'react-native-elements';
+
 import MonthlyChart from '../components/MonthlyChart';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -20,15 +19,7 @@ class MetricDetailsScreen extends Component {
             ...this.props.metricsReducer.collection[currentMetric],
             /* Metric selected in the previous screen */
             currentMetric,
-            /* year and month showed on screen, default today */
-            showingDate: moment(),
-            /* Date Selected by the user in calendar, obj returned by calendar */
-            selectedDate: undefined,
-            showOverlay: false,
             chartHeight: undefined,
-            /* overlay input fields: */
-            value: '',
-            comments: '',
             /* array containing data for generating our chart */
             readingsForChart: [],
             /* array containing selected dates for showing in calendar strip */
@@ -70,79 +61,6 @@ class MetricDetailsScreen extends Component {
                 );
             },
         });
-    }
-
-    /**
-     * Handles the change  value for any field of overlay
-     * @param {*} inputName Name of the field
-     * @param {*} inputValue value of the field
-     */
-    handleChange = (inputName, inputValue) => {
-        this.setState({
-            [inputName]: inputValue,
-        });
-    }
-
-    /**
-      * Opens overlay for adding a new reading
-      * @param {*} dayObj obj with the selected date
-      */
-    pickDate = (dayObj) => {
-        let metric = this.state.currentMetric;
-        let year = dayObj.format('YYYY');
-        let month = dayObj.format('MM');
-        let day = dayObj.format('DD');
-        let value = '';
-        let comments = '';
-
-        if (this.isValidReading(metric, year, month) && day in this.props.readingsReducer[metric][year][month]){
-            value = this.props.readingsReducer[metric][year][month][day].value;
-            comments = this.props.readingsReducer[metric][year][month][day].comments;
-        }
-
-        this.setState({
-            showOverlay: true,
-            selectedDate: dayObj,
-            value,
-            comments,
-        });
-    }
-
-    /**
-     * Action for the save button when adding new reading
-     * Adds the reading to the store, hides the overlay and
-     * updates chart data
-     */
-    onReadingSave = () => {
-        this.props.addReading({
-            currentMetric: this.state.currentMetric,
-            value: this.state.value,
-            date: this.state.selectedDate.valueOf(),
-            comments: this.state.comments,
-            photo: '',
-        });
-
-        this.setState({
-            showOverlay: false,
-            selectedDate: undefined,
-            value: '',
-            comments: '',
-            photo: '',
-        }, () => this.setReadingsData());
-    }
-
-    /**
-     * Returns true if there's a registry for date
-    */
-    isValidReading = (metric, year, month) => {
-        if ((metric in this.props.readingsReducer) &&
-        (year in this.props.readingsReducer[metric]) &&
-        (month in this.props.readingsReducer[metric][year])){
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     /**
@@ -205,11 +123,20 @@ class MetricDetailsScreen extends Component {
             markedDatesForStrip: markedDatesArray,
         });
     }
+
     /**
      * Everytime we come to this screen we need to check if there was a
-     * settings change so we can update our chart
+     * change in another screen (user settings, add reading) so we can update our chart
      */
     componentDidUpdate() {
+        // Check Readings Change
+        let readingsUpdated = this.props.route.params?.readingsUpdated ?? false;
+        if (readingsUpdated){
+            this.props.route.params.readingsUpdated = undefined;
+            this.setReadingsData();
+        }
+
+        // Check Settings Change
         let settingsUpdated = this.props.route.params?.settingsUpdated ?? false;
         if (settingsUpdated){
             this.props.route.params.settingsUpdated = undefined;
@@ -222,21 +149,19 @@ class MetricDetailsScreen extends Component {
     render() {
         return (
             <View style={{flex: 1, }}>
-                <Overlay
-                    isVisible={this.state.showOverlay}
-                    onBackdropPress={ () => this.setState({ showOverlay: false, }) }
-                >
-                    <View>
-                        <Input name='value' value={this.state.value} label='Day Reading' placeholder='' keyboardType='number-pad' onChange={this.handleChange} />
-                        <Input name='comments' value={this.state.comments} placeholder='' label='Comments' onChange={this.handleChange} />
-                        <Button title='Save' onPress={ this.onReadingSave } />
-                    </View>
-                </Overlay>
                 <View>
                     <CalendarStrip
                         scrollable={true}
                         style={{height:100, paddingTop: 10, paddingBottom: 10, }}
-                        onDateSelected={(dayObj) => this.pickDate(dayObj)}
+                        onDateSelected={(selectedDay) => {
+                            this.setState({
+                                readingsUpdated: false,
+                            }, () => {
+                                this.props.navigation.navigate('AddReadingScreen', {
+                                    selectedDay: selectedDay.valueOf(),
+                                });
+                            });
+                        }}
                         markedDates={this.state.markedDatesForStrip}
                         customDatesStyles={[
                             {
@@ -263,13 +188,7 @@ class MetricDetailsScreen extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addReading: obj => {
-            dispatch(addReading(obj));
-        },
-    };
-};
+
 
 const mapStateToProps = state => {
     return {
@@ -278,4 +197,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MetricDetailsScreen);
+export default connect(mapStateToProps, null)(MetricDetailsScreen);

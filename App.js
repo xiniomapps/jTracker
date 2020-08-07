@@ -8,6 +8,7 @@ import { Icon } from 'react-native-elements';
 
 import MetricsScreen from './src/screens/MetricsScreen';
 import AddMetricScreen from './src/screens/AddMetricScreen';
+import AddReadingScreen from './src/screens/AddReadingScreen';
 import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
@@ -38,6 +39,7 @@ function MetricsStackScreen() {
             <MetricsStack.Screen name='AddMetricScreen' component={AddMetricScreen} options={{ title: 'New Metric', }}/>
             <MetricsStack.Screen name='MetricDetailsScreen' component={MetricDetailsScreen} options={{ title: 'Metric Details', }}/>
             <MetricsStack.Screen name='MetricSettingsScreen' component={MetricSettingsScreen} />
+            <MetricsStack.Screen name='AddReadingScreen' component={AddReadingScreen} />
         </MetricsStack.Navigator>
     );
 }
