@@ -7,6 +7,8 @@ import { addReading } from '../redux/readingsReducer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import FormValidator from '../utils/FormValidator';
+import {showMessage} from 'react-native-flash-message';
 
 class AddReadingScreen extends Component {
     constructor(props) {
@@ -16,10 +18,17 @@ class AddReadingScreen extends Component {
         let readingsExists = this.readingExists(selectedDay);
 
         this.state = {
+            /* all the form fields */
+            fields: {
+                value: readingsExists ? this.props.readingsReducer[currentMetric][selectedDay.format('YYYY')][selectedDay.format('MM')][selectedDay.format('DD')].value : undefined,
+                comments: readingsExists ? this.props.readingsReducer[currentMetric][selectedDay.format('YYYY')][selectedDay.format('MM')][selectedDay.format('DD')].comments : '',
+            },
             currentMetric,
             selectedDay,
-            value: readingsExists ? this.props.readingsReducer[currentMetric][selectedDay.format('YYYY')][selectedDay.format('MM')][selectedDay.format('DD')].value : undefined,
-            comments: readingsExists ? this.props.readingsReducer[currentMetric][selectedDay.format('YYYY')][selectedDay.format('MM')][selectedDay.format('DD')].comments : '',
+            /* Contains a flag for each form field describing if it has an error (true) or not (false). Set by FormValidator */
+            fieldErrorsFlags: {},
+            /* If available, contains an error description for each form field. Set by FormValidator */fieldErrorsDesc: {},
+
         };
 
     }
@@ -31,8 +40,27 @@ class AddReadingScreen extends Component {
         route: PropTypes.any,
     }
 
+    /**
+     * Defines constraints for field input, see: https://validatejs.org/#constraints
+    */
+    fieldConstraints = {
+        value: {
+            presence: {
+                allowEmpty: false,
+            },
+            numericality: {
+                strict: true,
+            },
+        },
+        comments: {
+            presence: {
+                allowEmpty: true,
+            },
+        },
+    }
+
     componentDidMount = () => {
-        // Configure navigation Bar:
+        /* Configure navigation Bar: */
         this.props.navigation.setOptions({
             title: this.state.selectedDay.format('MMM Do YYYY'),
         });
@@ -59,14 +87,30 @@ class AddReadingScreen extends Component {
     }
 
     /**
-     * Handles the change  value for any field of overlay
-     * @param {*} inputName Name of the field
-     * @param {*} inputValue value of the field
+     * Everytime the user types in inputName textfield, the state is updated with inputValue
+     * @param {*} inputName The name of the field
+     * @param {*} inputValue The new value of the field
      */
     handleChange = (inputName, inputValue) => {
         this.setState({
-            [inputName]: inputValue,
+            ...this.state,
+            fields: {
+                ...this.state.fields,
+                [inputName]: inputValue,
+            },
         });
+    }
+
+    /**
+     * If there's one or more validation error for a field, return a string with these
+     * to show an errorMessage in the text field
+     * @param {*} inputName name of the input
+     */
+    getErrorMessage = (inputName) => {
+        if (inputName in this.state.fieldErrorsDesc){
+            return this.state.fieldErrorsDesc[inputName].join('. ');
+        }
+        return '';
     }
 
     /**
@@ -74,17 +118,33 @@ class AddReadingScreen extends Component {
      * Adds the reading to the store and navigates back
      */
     onReadingSave = () => {
-        this.props.addReading({
-            currentMetric: this.state.currentMetric,
-            date: this.state.selectedDay.valueOf(),
-            value: this.state.value,
-            comments: this.state.comments,
-            photo: '',
-        });
+        let formValidator = new FormValidator();
+        if (formValidator.validate(this.state.fields, this.fieldConstraints)){
+            this.props.addReading({
+                currentMetric: this.state.currentMetric,
+                date: this.state.selectedDay.valueOf(),
+                value: this.state.fields.value,
+                comments: this.state.fields.comments,
+                photo: '',
+            });
 
-        this.props.navigation.navigate('MetricDetailsScreen', {
-            readingsUpdated: true,
-        });
+            this.props.navigation.navigate('MetricDetailsScreen', {
+                readingsUpdated: true,
+            });
+        }
+        else {
+            this.setState({
+                fieldErrorsFlags: formValidator.getFieldsErrorFlags(),
+                fieldErrorsDesc: formValidator.getErrors(),
+            }, () => {
+                showMessage({
+                    message: 'Missing Data',
+                    description: 'Please check your input for fields: ' + Object.keys(this.state.fieldErrorsDesc).join(', '),
+                    type: 'danger',
+                    icon: 'auto',
+                });
+            });
+        }
     }
 
     render() {
@@ -94,19 +154,21 @@ class AddReadingScreen extends Component {
                     <Input
                         name='value'
                         label='Reading'
-                        value={this.state.value}
+                        value={this.state.fields.value}
                         placeholder=''
                         onChange={this.handleChange}
                         keyboardType='number-pad'
+                        errorMessage={this.getErrorMessage('value')}
                     />
                     <Input
                         name='comments'
                         label='Notes'
-                        value={this.state.comments}
+                        value={this.state.fields.comments}
                         placeholder=''
                         onChange={this.handleChange}
                         multiline
                         numberOfLines={3}
+                        errorMessage={this.getErrorMessage('comments')}
                     />
                 </View>
                 <View>

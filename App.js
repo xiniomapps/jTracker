@@ -14,6 +14,8 @@ import AboutScreen from './src/screens/AboutScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
 import UserSettingsScreen from './src/screens/UserSettingsScreen';
 import { nm } from './src/styles/globalStyles';
+import FlashMessage from 'react-native-flash-message';
+
 
 const UserSettingsStack = createStackNavigator();
 function UserSettingsStackScreen(){
@@ -100,6 +102,7 @@ export default function App() {
                     }}
                 />
             </Tab.Navigator>
+            <FlashMessage position='top' />
         </NavigationContainer>
     );
 }
