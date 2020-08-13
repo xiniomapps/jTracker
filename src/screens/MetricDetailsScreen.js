@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Icon} from 'react-native-elements';
@@ -44,20 +44,36 @@ class MetricDetailsScreen extends Component {
             title: this.state.name,
             headerRight: () => {
                 return (
-                    <Icon
-                        onPress={() => {
-                            this.setState({
-                                settingsUpdated: false,
-                            }, () => {
-                                this.props.navigation.navigate('MetricSettingsScreen');
-                            });
-                        }}
-                        name='settings'
-                        type='material'
-                        size={nm(25)}
-                        color='#fff'
-                        containerStyle={{marginRight: nm(10), }}
-                    />
+                    <View style={{flexDirection: 'row', }}>
+                        <Icon
+                            onPress={() => {
+                                this.setState({
+                                    settingsUpdated: false,
+                                }, () => {
+                                    this.props.navigation.navigate('EditMetricScreen');
+                                });
+                            }}
+                            name='edit'
+                            type='material'
+                            size={nm(20)}
+                            color='#fff'
+                            containerStyle={{marginRight: nm(15), }}
+                        />
+                        <Icon
+                            onPress={() => {
+                                this.setState({
+                                    settingsUpdated: false,
+                                }, () => {
+                                    this.props.navigation.navigate('MetricSettingsScreen');
+                                });
+                            }}
+                            name='settings'
+                            type='material'
+                            size={nm(20)}
+                            color='#fff'
+                            containerStyle={{marginRight: nm(15), }}
+                        />
+                    </View>
                 );
             },
         });

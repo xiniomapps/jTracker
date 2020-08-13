@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {addMetric} from '../redux/metricsReducer';
+import {updateMetric} from '../redux/metricsReducer';
 
 import MetricForm from '../components/MetricForm';
 
-class AddMetricScreen extends Component {
+class EditMetricScreen extends Component {
     static propTypes = {
-        addMetric: PropTypes.func,
+        updateMetric: PropTypes.func,
+        metricsReducer: PropTypes.object,
     }
 
     render() {
         return (
             <ScrollView style={{flex:1, flexDirection: 'column', }} keyboardShouldPersistTaps='never'>
                 <MetricForm
+                    fields={this.props.metricsReducer.collection[this.props.metricsReducer.selected]}
                     onChange={(fields) => {
                         this.setState({
                             ...this.state,
@@ -22,7 +24,10 @@ class AddMetricScreen extends Component {
                         });
                     }}
                     onSave={(fields) => {
-                        this.props.addMetric(fields);
+                        this.props.updateMetric({
+                            ...fields,
+                            id: this.props.metricsReducer.selected,
+                        });
                         this.props.navigation.navigate('MetricsScreen');
                     }}
                 />
@@ -33,10 +38,16 @@ class AddMetricScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addMetric: obj => {
-            dispatch(addMetric(obj));
+        updateMetric: obj => {
+            dispatch(updateMetric(obj));
         },
     };
 };
 
-export default connect(null, mapDispatchToProps)(AddMetricScreen);
+const mapStateToProps = state => {
+    return {
+        metricsReducer: state.metrics,
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditMetricScreen);

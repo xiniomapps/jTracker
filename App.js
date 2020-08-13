@@ -5,17 +5,17 @@ import { navigationRef } from './src/utils/RootNavigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import { nm } from './src/styles/globalStyles';
 
-import MetricsScreen from './src/screens/MetricsScreen';
+import AboutScreen from './src/screens/AboutScreen';
 import AddMetricScreen from './src/screens/AddMetricScreen';
 import AddReadingScreen from './src/screens/AddReadingScreen';
+import EditMetricScreen from './src/screens/EditMetricScreen';
+import FlashMessage from 'react-native-flash-message';
 import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
-import AboutScreen from './src/screens/AboutScreen';
+import MetricsScreen from './src/screens/MetricsScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
 import UserSettingsScreen from './src/screens/UserSettingsScreen';
-import { nm } from './src/styles/globalStyles';
-import FlashMessage from 'react-native-flash-message';
-
 
 const UserSettingsStack = createStackNavigator();
 function UserSettingsStackScreen(){
@@ -39,6 +39,7 @@ function MetricsStackScreen() {
             }}>
             <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'My Metrics', }} />
             <MetricsStack.Screen name='AddMetricScreen' component={AddMetricScreen} options={{ title: 'New Metric', }}/>
+            <MetricsStack.Screen name='EditMetricScreen' component={EditMetricScreen} options={{ title: 'Edit Metric', }}/>
             <MetricsStack.Screen name='MetricDetailsScreen' component={MetricDetailsScreen} options={{ title: 'Metric Details', }}/>
             <MetricsStack.Screen name='MetricSettingsScreen' component={MetricSettingsScreen} />
             <MetricsStack.Screen name='AddReadingScreen' component={AddReadingScreen} />

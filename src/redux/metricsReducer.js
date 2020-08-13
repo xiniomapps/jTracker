@@ -1,5 +1,6 @@
 import {
     ADD_METRIC,
+    UPDATE_METRIC,
     DEL_METRIC,
     DEL_ALL_METRICS,
     SELECT_METRIC,
@@ -22,15 +23,15 @@ const defaultSettings = {
 export default function metricsReducer(state = initialState, action){
     switch (action.type){
         case ADD_METRIC: {
-            let date = Date.now();
+            let id = Date.now();
             return {
                 ...state,
                 total: state.total + 1,
                 collection: {
                     ...state.collection,
-                    [date]: {
+                    [id]: {
                         name: action.payload.name,
-                        creationDate: date,
+                        creationDate: id,
                         goal: action.payload.goal,
                         units: action.payload.units,
                         reasons: action.payload.reasons,
@@ -39,6 +40,24 @@ export default function metricsReducer(state = initialState, action){
                     },
                 },
             };
+        }
+        case UPDATE_METRIC: {
+            if ('id' in action.payload && action.payload.id){
+                return {
+                    ...state,
+                    collection: {
+                        ...state.collection,
+                        [action.payload.id]: {
+                            ...state.collection[action.payload.id],
+                            name: action.payload.name,
+                            goal: action.payload.goal,
+                            units: action.payload.units,
+                            reasons: action.payload.reasons,
+                        },
+                    },
+                };
+            }
+            return state;
         }
         case DEL_METRIC:
             if (state.total >= 1) {
@@ -77,6 +96,14 @@ export default function metricsReducer(state = initialState, action){
     }
 }
 
+/**
+ * addMetric
+ * @param {Object} obj containing metrics data
+ * @param {string} obj.name metric's name
+ * @param {string} obj.goal numeric goal
+ * @param {string} obj.units units for the goal (e.g Kg)
+ * @param {string} obj.reasons Personal reasons
+ */
 export const addMetric = (obj) => {
     return {
         type: ADD_METRIC,
@@ -84,6 +111,27 @@ export const addMetric = (obj) => {
     };
 };
 
+/**
+ * updateMetric
+ * @param {Object} obj containing metrics data
+ * @param {string} obj.id metric id
+ * @param {string} obj.name metric name
+ * @param {string} obj.goal numeric goal
+ * @param {string} obj.units units for the goal (e.g Kg)
+ * @param {string} obj.reasons Personal reasons
+ */
+export const updateMetric = (obj) => {
+    return {
+        type: UPDATE_METRIC,
+        payload: obj,
+    };
+};
+
+/**
+ * delMetric
+ * @param {Object} obj
+ * @param {String} obj.id metric id
+ */
 export const delMetric = (obj) => {
     return {
         type: DEL_METRIC,
@@ -91,6 +139,11 @@ export const delMetric = (obj) => {
     };
 };
 
+/**
+ * selectMetric
+ * Saves the currently selected metric to have easy access to its id
+ * @param {Object} obj
+ */
 export const selectMetric = (obj) => {
     return {
         type: SELECT_METRIC,
@@ -98,6 +151,10 @@ export const selectMetric = (obj) => {
     };
 };
 
+/**
+ * saveMetricSettings
+ * @param {Object} obj
+ */
 export const saveMetricSettings = (obj) => {
     return {
         type: SAVE_METRIC_SETTINGS,
@@ -105,6 +162,10 @@ export const saveMetricSettings = (obj) => {
     };
 };
 
+/**
+ * updateMetricMinReading
+ * @param {Object} obj
+ */
 export const updateMetricMinReading = (obj) => {
     return {
         type: UPDATE_METRIC_MIN_READING,
