@@ -185,6 +185,7 @@ class MetricDetailsScreen extends Component {
                                 dateContainerStyle: { backgroundColor: '#ccc', },
                             },
                         ]}
+                        maxDate={moment()}
                     />
                 </View>
                 <View
