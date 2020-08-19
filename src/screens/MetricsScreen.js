@@ -7,6 +7,14 @@ import { selectMetric } from '../redux/metricsReducer';
 import { nm } from '../styles/globalStyles';
 
 class MetricsScreen extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            viewHeight: undefined,
+        };
+    }
+
 
     static propTypes = {
         metricsReducer: PropTypes.object,
@@ -78,6 +86,15 @@ class MetricsScreen extends Component {
     }
 
     render() {
+        if (Object.entries(this.props.metricsReducer.collection).length === 0){
+            return (
+                <View
+                    style={{justifyContent: 'center', paddingLeft: 15, paddingRight: 15, paddingTop: nm(50), }}>
+                    <Text style={{color: '#999', textAlign: 'center', fontSize: 16, marginBottom: 20, fontWeight: 'bold', }}>No metrics found</Text>
+                    <Text style={{color: '#999', textAlign: 'center', }}>Tap on the + icon to start adding your metrics.</Text>
+                </View>
+            );
+        }
         return (
             <View>
                 <FlatList
