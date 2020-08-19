@@ -41,7 +41,7 @@ class MetricsScreen extends Component {
     subtitleFormatter = (item) => {
         return (
             <Text style={{color: '#999', }}>
-                Goal: {this.props.metricsReducer.collection[item].goal}
+                Goal: {this.props.metricsReducer.collection[item].goal} {this.props.metricsReducer.collection[item].units}
             </Text>
         );
     }
