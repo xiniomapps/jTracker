@@ -16,6 +16,7 @@ import MetricDetailsScreen from './src/screens/MetricDetailsScreen';
 import MetricsScreen from './src/screens/MetricsScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
 import UserSettingsScreen from './src/screens/UserSettingsScreen';
+import LicensesScreen from './src/screens/LicensesScreen';
 
 const UserSettingsStack = createStackNavigator();
 function UserSettingsStackScreen(){
@@ -54,7 +55,8 @@ function AboutStackScreen(){
             headerStyle: { backgroundColor: '#069', },
             headerTintColor: '#fff',
         }}>
-            <MetricsStack.Screen name='About' component={AboutScreen} />
+            <MetricsStack.Screen name='About' component={AboutScreen} options={{ title: 'About jTracker', }}/>
+            <MetricsStack.Screen name='LicensesScreen' component={LicensesScreen} options={{ title: 'Other Licenses', }}/>
         </AboutStack.Navigator>
     );
 }

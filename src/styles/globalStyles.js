@@ -1,6 +1,6 @@
 import { Dimensions, Platform, PixelRatio, StyleSheet } from 'react-native';
 
-const { width, height, } = Dimensions.get('window');
+const { width, } = Dimensions.get('window');
 
 /**
  * Normalize size depending on screen size
@@ -17,3 +17,12 @@ export function nm(size) {
         return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
     }
 }
+
+export const globalStyles = StyleSheet.create({
+    textButton: {
+    },
+
+    textButtonTitle: {
+        fontWeight: 'bold',
+    },
+});
