@@ -61,6 +61,7 @@ export default class AboutScreen extends Component {
                         <Button
                             title='Other Licenses'
                             titleStyle={[gs.textButtonTitle, {color: '#069', }, ]}
+                            buttonStyle={{minHeight: 48, }}
                             type='clear'
                             url='https://gitlab.com/triebjlr/jtracker/-/raw/development/LICENSE'
                             onPress={ () => this.props.navigation.navigate('LicensesScreen')}
