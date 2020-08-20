@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input as RNEInput, Icon } from 'react-native-elements';
+import { Input as RNEInput } from 'react-native-elements';
 //import {globalStyles as gs, globalColors as gc} from '../styles/globalStyles';
 import PropTypes from 'prop-types';
 
@@ -28,7 +28,7 @@ export default class Input extends Component {
                 //containerStyle={gs.inputOutContainer}
                 //inputContainerStyle={gs.inputInContainer}
                 //labelStyle={gs.inputLabel}
-                //inputStyle={gs.input}
+                inputStyle={{minHeight:48, }}
                 onChange={this.handleChange}
                 //leftIcon={
                 //    <Icon
