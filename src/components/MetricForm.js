@@ -161,7 +161,7 @@ export default class MetricForm extends Component {
                 />
                 <Button
                     title='Save'
-                    buttonStyle={{backgroundColor: '#009933', }}
+                    buttonStyle={{backgroundColor: '#009933', minHeight: 48, }}
                     titleStyle={{color: '#fff', }}
                     containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
                     type='outline'

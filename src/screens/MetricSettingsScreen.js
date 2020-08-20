@@ -104,7 +104,7 @@ class MetricSettingsScreen extends Component {
                 <View>
                     <Button
                         title='Delete this metric'
-                        buttonStyle={{backgroundColor: '#990d00', }}
+                        buttonStyle={{backgroundColor: '#990d00', minHeight: 48, }}
                         titleStyle={{color: '#fff', }}
                         containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
                         type='outline'
