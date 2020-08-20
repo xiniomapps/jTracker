@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Icon} from 'react-native-elements';
+import {Button, Icon} from 'react-native-elements';
 
 import MonthlyChart from '../components/MonthlyChart';
 import moment from 'moment';
@@ -45,7 +45,9 @@ class MetricDetailsScreen extends Component {
             headerRight: () => {
                 return (
                     <View style={{flexDirection: 'row', }}>
-                        <Icon
+                        <Button
+                            type='clear'
+                            containerStyle={{marginRight: 5, minHeight: 48, minWidth: 48, }}
                             onPress={() => {
                                 this.setState({
                                     settingsUpdated: false,
@@ -53,13 +55,18 @@ class MetricDetailsScreen extends Component {
                                     this.props.navigation.navigate('EditMetricScreen');
                                 });
                             }}
-                            name='edit'
-                            type='material'
-                            size={nm(20)}
-                            color='#fff'
-                            containerStyle={{marginRight: nm(15), }}
+                            icon={
+                                <Icon
+                                    type='material'
+                                    name='edit'
+                                    size={30}
+                                    color='#fff'
+                                />
+                            }
                         />
-                        <Icon
+                        <Button
+                            type='clear'
+                            containerStyle={{marginRight: 5, minHeight: 48, minWidth: 48, }}
                             onPress={() => {
                                 this.setState({
                                     settingsUpdated: false,
@@ -67,11 +74,14 @@ class MetricDetailsScreen extends Component {
                                     this.props.navigation.navigate('MetricSettingsScreen');
                                 });
                             }}
-                            name='settings'
-                            type='material'
-                            size={nm(20)}
-                            color='#fff'
-                            containerStyle={{marginRight: nm(15), }}
+                            icon={
+                                <Icon
+                                    type='material'
+                                    name='settings'
+                                    size={30}
+                                    color='#fff'
+                                />
+                            }
                         />
                     </View>
                 );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
+import { Button, Icon, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { selectMetric } from '../redux/metricsReducer';
@@ -25,13 +25,18 @@ class MetricsScreen extends Component {
         this.props.navigation.setOptions({
             headerRight: () => {
                 return (
-                    <Icon
-                        type='material'
-                        name='add'
+                    <Button
+                        type='clear'
                         onPress={ () => this.props.navigation.navigate('AddMetricScreen')}
-                        size={nm(25)}
-                        color='#fff'
-                        containerStyle={{marginRight: nm(10), }}
+                        containerStyle={{marginRight: 5, minHeight: 48, minWidth: 48, }}
+                        icon={
+                            <Icon
+                                type='material'
+                                name='add'
+                                size={30}
+                                color='#fff'
+                            />
+                        }
                     />
                 );
             },
