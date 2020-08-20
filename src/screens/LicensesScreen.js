@@ -41,6 +41,7 @@ export default class LicensesScreen extends Component {
     renderItem = ({item, }) => {
         return (
             <ListItem
+                containerStyle={{minHeight: 48, }}
                 title={() => (
                     <Text style={{fontWeight: 'bold', }}>{item}</Text>
                 )}

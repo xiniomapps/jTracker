@@ -63,6 +63,7 @@ class MetricsScreen extends Component {
         return (
             <ListItem
                 title={ this.titleFormatter(item) }
+                containerStyle={{minHeight: 48, }}
                 subtitle={ this.subtitleFormatter(item) }
                 chevron
                 bottomDivider
