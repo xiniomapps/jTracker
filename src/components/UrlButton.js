@@ -65,7 +65,7 @@ export default class UrlButton extends Component {
                 <RNEButton
                     {...this.props}
                     type='clear'
-                    buttonStyle={gs.textButton}
+                    buttonStyle={[gs.textButton, {minHeight: 48, }, ]}
                     titleStyle={[gs.textButtonTitle, {color: this.props.color, }, ]}
                     title={this.props.title}
                     icon={ this.renderIcon() }
