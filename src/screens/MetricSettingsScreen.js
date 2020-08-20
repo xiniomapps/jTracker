@@ -91,10 +91,12 @@ class MetricSettingsScreen extends Component {
                     onCancelPressed={ () => {
                         this.setState({showAlert: false, });
                     }}
+                    cancelButtonStyle={{minHeight:48, justifyContent: 'center', }}
                     showConfirmButton={true}
                     confirmButtonColor='#990d00'
                     confirmText='Yes, delete it'
                     onConfirmPressed={this.deleteMetric}
+                    confirmButtonStyle={{minHeight: 48, justifyContent: 'center', }}
                 />
                 <View style={{flex: 1, marginVertical: nm(15), marginHorizontal: nm(20), }}>
                     <CheckBox
