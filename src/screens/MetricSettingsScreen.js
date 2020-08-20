@@ -97,8 +97,11 @@ class MetricSettingsScreen extends Component {
                     onConfirmPressed={this.deleteMetric}
                 />
                 <View style={{flex: 1, marginVertical: nm(15), marginHorizontal: nm(20), }}>
-                    <CheckBox title='Chart starts from zero' checked={this.state.settings.fromZero}
+                    <CheckBox
+                        title='Chart starts from zero'
+                        checked={this.state.settings.fromZero}
                         onPress={this.toggleFromZero}
+                        containerStyle={{minHeight: 48, }}
                     />
                 </View>
                 <View>
