@@ -13,6 +13,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		85446C7BD157C3F5FDEF2890 /* libPods-jTracker-jTrackerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D789E7368C1CCCE579E482 /* libPods-jTracker-jTrackerTests.a */; };
+		9DF3F2C224F813D400E55703 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DF3F2C124F813D400E55703 /* GoogleService-Info.plist */; };
+		9DF3F2C324F813D400E55703 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DF3F2C124F813D400E55703 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,7 @@
 		67D789E7368C1CCCE579E482 /* libPods-jTracker-jTrackerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jTracker-jTrackerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B021FD8AD94BCA61CA8D0A3 /* Pods-jTracker-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jTracker-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-jTracker-tvOSTests/Pods-jTracker-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		9D4FD42124C63D09000660D6 /* jTracker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jTracker-Bridging-Header.h"; sourceTree = "<group>"; };
+		9DF3F2C124F813D400E55703 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../keys/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3E40026D2894A73697201D7 /* Pods-jTracker-jTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jTracker-jTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-jTracker-jTrackerTests/Pods-jTracker-jTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4D3C0B9ADB1912DE0C2FA40 /* libPods-jTracker-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jTracker-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -99,6 +102,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				9DF3F2C124F813D400E55703 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				9D4FD42124C63D09000660D6 /* jTracker-Bridging-Header.h */,
@@ -254,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DF3F2C324F813D400E55703 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				9DF3F2C224F813D400E55703 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
