@@ -58,5 +58,7 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
+# Ignore google-services.json
+google-services.json
 # Ignore our keys directory
 keys/
