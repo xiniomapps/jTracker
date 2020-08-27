@@ -1,0 +1,3 @@
+jTracker le permite realizar un seguimiento de su progreso hacia un objetivo personal como perder peso, cuota de ventas, tiempo de estudio, etc.
+
+Puede configurar métricas personales y mantener lecturas diarias para cada métrica.
