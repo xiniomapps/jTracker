@@ -1,0 +1,3 @@
+jTracker allows you to keep track of your progress towards a personal goal like loosing some weight, sales quota, study time, etc.
+
+You can create and configure personal metrics and keep daily readings for each metric.

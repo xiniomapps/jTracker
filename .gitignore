@@ -60,3 +60,5 @@ buck-out/
 
 # Ignore google-services.json
 google-services.json
+# Ignore our keys directory
+keys/
