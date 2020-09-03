@@ -62,3 +62,5 @@ buck-out/
 google-services.json
 # Ignore our keys directory
 keys/
+# Ignore dotenv
+.env*
