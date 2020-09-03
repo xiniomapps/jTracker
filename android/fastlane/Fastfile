@@ -27,4 +27,11 @@ platform :android do
         gradle(task: 'bundle', build_type: 'Release')
         upload_to_play_store(track: 'beta', skip_upload_apk: true)
     end
+
+    desc "Enviar Beta a Firebase"
+    lane :firebase do
+        gradle(task: 'assemble', build_type: 'Release')
+    
+        firebase_app_distribution()
+    end
 end
