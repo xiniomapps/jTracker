@@ -1,0 +1,41 @@
+export const primary = '#005b98';
+export const onPrimary = '#ffffff';
+export const primaryLight = '#4e88c9';
+export const onPrimaryLight = '#000000';
+export const primaryDark = '#003269';
+export const onPrimaryDark = '#ffffff';
+export const secondary = '#e08858';
+export const onSecondary = '#000000';
+export const secondaryLight = '#ffb886';
+export const onSecondaryLight ='#000000';
+export const secondaryDark = '#aa5a2d';
+export const onSecondaryDark = '#ffffff';
+export const background = '#ffffff';
+export const onBackground = '#000000';
+export const surface = '#ffffff';
+export const onSurface = '#000000';
+export const onSurfaceLight = '#757575';
+export const error = '#b00020';
+export const onError = '#ffffff';
+
+/* Dark mode:
+export const primary = '#1b2125';
+export const onPrimary = '#ffffff';
+export const primaryLight = '#42484d';
+export const onPrimaryLight = '#ffffff';
+export const primaryDark = '#000000';
+export const onPrimaryDark = '#ffffff';
+export const secondary = '#a39b96';
+export const onSecondary = '#000000';
+export const secondaryLight = '#d4ccc7';
+export const onSecondaryLight ='#000000';
+export const secondaryDark = '#746d68';
+export const onSecondaryDark = '#ffffff';
+export const background = '#ffffff';
+export const onBackground = '#000000';
+export const surface = '#ffffff';
+export const onSurface = '#000000';
+export const onSurfaceLight = '#757575';
+export const error = '#b00020';
+export const onError = '#ffffff';
+*/

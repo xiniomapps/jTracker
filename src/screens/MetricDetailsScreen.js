@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Button, Icon} from 'react-native-elements';
+import {HeaderButton} from '../components';
 
 import MonthlyChart from '../components/MonthlyChart';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
-import { nm } from '../styles/globalStyles';
+import { Colors, nm } from '../styles';
 
 class MetricDetailsScreen extends Component {
     constructor(props) {
@@ -45,9 +45,9 @@ class MetricDetailsScreen extends Component {
             headerRight: () => {
                 return (
                     <View style={{flexDirection: 'row', }}>
-                        <Button
-                            type='clear'
-                            containerStyle={{marginRight: 5, minHeight: 48, minWidth: 48, }}
+                        <HeaderButton
+                            iconType='material'
+                            iconName='edit'
                             onPress={() => {
                                 this.setState({
                                     settingsUpdated: false,
@@ -55,18 +55,10 @@ class MetricDetailsScreen extends Component {
                                     this.props.navigation.navigate('EditMetricScreen');
                                 });
                             }}
-                            icon={
-                                <Icon
-                                    type='material'
-                                    name='edit'
-                                    size={30}
-                                    color='#fff'
-                                />
-                            }
                         />
-                        <Button
-                            type='clear'
-                            containerStyle={{marginRight: 5, minHeight: 48, minWidth: 48, }}
+                        <HeaderButton
+                            iconType='material'
+                            iconName='settings'
                             onPress={() => {
                                 this.setState({
                                     settingsUpdated: false,
@@ -74,14 +66,6 @@ class MetricDetailsScreen extends Component {
                                     this.props.navigation.navigate('MetricSettingsScreen');
                                 });
                             }}
-                            icon={
-                                <Icon
-                                    type='material'
-                                    name='settings'
-                                    size={30}
-                                    color='#fff'
-                                />
-                            }
                         />
                     </View>
                 );
@@ -136,8 +120,8 @@ class MetricDetailsScreen extends Component {
                     date: reading.date,
                     dots: [
                         {
-                            color: '#069',
-                            selectedColor: '#069',
+                            color: Colors.secondaryLight,
+                            selectedColor: Colors.secondaryLight,
                         },
                     ],
                 });
@@ -192,7 +176,7 @@ class MetricDetailsScreen extends Component {
                         customDatesStyles={[
                             {
                                 startDate: moment(),
-                                dateContainerStyle: { backgroundColor: '#ccc', },
+                                dateContainerStyle: { backgroundColor: Colors.secondary, },
                             },
                         ]}
                         maxDate={moment()}
@@ -202,13 +186,13 @@ class MetricDetailsScreen extends Component {
                     onLayout={(event) => {
                         this.setState({chartHeight: event.nativeEvent.layout.height - nm(50), });
                     }}
-                    style={{flex: 1, alignItems: 'center', backgroundColor: '#eee', paddingTop: 10, paddingBottom: 10, }}>
-                    <Text style={{color: '#999', fontWeight: 'bold', fontSize: nm(14), }}>{this.state.reasons}</Text>
-                    <MonthlyChart color='#069' data={this.state.readingsForChart} height={this.state.chartHeight} metricSettings={this.state.settings} />
-                    <Text style={{color: '#999', }}>My goal: {this.state.goal} {this.state.units}</Text>
+                    style={{flex: 1, alignItems: 'center', paddingTop: 10, paddingBottom: 10, }}>
+                    <Text style={{color: Colors.onSurface, fontWeight: 'bold', fontSize: nm(14), }}>{this.state.reasons}</Text>
+                    <MonthlyChart data={this.state.readingsForChart} height={this.state.chartHeight} metricSettings={this.state.settings} />
+                    <Text style={{color: Colors.onSurface, }}>My goal: {this.state.goal} {this.state.units}</Text>
                 </View>
                 <View style={{alignItems: 'center', padding: nm(20), }}>
-                    <Text style={{color: '#999', fontSize: nm(8), }}>This goal was created on {Date(this.state.creationDate)}</Text>
+                    <Text style={{color: Colors.onSurface, fontSize: nm(8), }}>This goal was created on {Date(this.state.creationDate)}</Text>
                 </View>
             </View>
         );

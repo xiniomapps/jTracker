@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, View, Text } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import PropTypes from 'prop-types';
+import { Colors } from '../styles';
 
 export default class MonthlyChart extends Component {
     static propTypes = {
@@ -15,7 +16,6 @@ export default class MonthlyChart extends Component {
     static defaultProps = {
         width: Dimensions.get('window').width - 30,
         height: 150,
-        color: '#333',
     }
 
     renderChart() {
@@ -32,13 +32,10 @@ export default class MonthlyChart extends Component {
                 yAxisLabel={''}
                 fromZero={this.props.metricSettings.fromZero}
                 chartConfig={{
-                    backgroundColor: '#fff',
-                    backgroundGradientFrom: this.props.color,
-                    backgroundGradientFromOpacity: 0.5,
-                    backgroundGradientTo: this.props.color,
-                    backgroundGradientToOpacity: 1,
-                    decimalPlaces: 2, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    backgroundGradientFromOpacity: 0,
+                    backgroundGradientToOpacity: 0,
+                    decimalPlaces: 2,
+                    color: () => Colors.secondaryDark,
                     style: {
                         borderRadius: 16,
                     },
@@ -55,8 +52,8 @@ export default class MonthlyChart extends Component {
         if (Object.entries(this.props.data).length === 0){
             return (
                 <View style={{height:this.props.height, justifyContent: 'center', paddingLeft: 15, paddingRight: 15, }}>
-                    <Text style={{color: '#999', textAlign: 'center', fontSize: 16, marginBottom: 20, fontWeight: 'bold', }}>No data found</Text>
-                    <Text style={{color: '#999', textAlign: 'center', }}>Tap on the calendar to start adding your readings.</Text>
+                    <Text style={{color: Colors.onSurfaceLight, textAlign: 'center', fontSize: 16, marginBottom: 20, fontWeight: 'bold', }}>No data found</Text>
+                    <Text style={{color: Colors.onSurfaceLight, textAlign: 'center', }}>Tap on the calendar to start adding your readings.</Text>
                 </View>
             );
         }

@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {saveUserSettings} from '../redux/userSettingsReducer';
 import Input from '../components/Input';
-import { nm } from '../styles/globalStyles';
-
+import { Colors, nm } from '../styles';
 class UserSettingsScreen extends Component {
     constructor(props) {
         super(props);
@@ -34,6 +33,7 @@ class UserSettingsScreen extends Component {
                     <Input
                         name='name'
                         label='Your Name'
+                        labelStyle={{ color: Colors.onSurface, }}
                         value={this.state.name}
                         placeholder=''
                         onChange={this.handleChange}

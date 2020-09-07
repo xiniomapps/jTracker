@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Input from '../components/Input';
-import { nm } from '../styles/globalStyles';
 import { addReading } from '../redux/readingsReducer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import FormValidator from '../utils/FormValidator';
 import {showMessage} from 'react-native-flash-message';
+import { Colors, nm } from '../styles';
 
 class AddReadingScreen extends Component {
     constructor(props) {
@@ -142,6 +142,8 @@ class AddReadingScreen extends Component {
                     description: 'Please check your input for fields: ' + Object.keys(this.state.fieldErrorsDesc).join(', '),
                     type: 'danger',
                     icon: 'auto',
+                    backgroundColor: Colors.error,
+                    color: Colors.onError,
                 });
             });
         }
@@ -154,6 +156,7 @@ class AddReadingScreen extends Component {
                     <Input
                         name='value'
                         label='Reading'
+                        labelStyle={{ color: Colors.onSurface, }}
                         value={this.state.fields.value}
                         placeholder=''
                         onChange={this.handleChange}
@@ -163,6 +166,7 @@ class AddReadingScreen extends Component {
                     <Input
                         name='comments'
                         label='Notes'
+                        labelStyle={{ color: Colors.onSurface, }}
                         value={this.state.fields.comments}
                         placeholder=''
                         onChange={this.handleChange}
@@ -174,14 +178,14 @@ class AddReadingScreen extends Component {
                 <View>
                     <Button
                         title='Save'
-                        buttonStyle={{backgroundColor: '#009933', minHeight: 48, }}
-                        titleStyle={{color: '#fff', }}
+                        buttonStyle={{backgroundColor: Colors.secondary, minHeight: 48, }}
+                        titleStyle={{color: Colors.onSecondary, }}
                         containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
                         type='outline'
                         raised
                         onPress={this.onReadingSave}
                         icon={
-                            <Icon name='content-save' type='material-community' size={nm(15)} color='#fff' style={{marginRight: 10, }} />
+                            <Icon name='content-save' type='material-community' size={nm(20)} color={Colors.onSecondary} style={{marginRight: 10, }} />
                         }
                     />
                 </View>

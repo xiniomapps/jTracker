@@ -5,7 +5,7 @@ import { navigationRef } from './src/utils/RootNavigation';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import { nm } from './src/styles/globalStyles';
+import { nm, Colors } from './src/styles';
 
 import AboutScreen from './src/screens/AboutScreen';
 import AddMetricScreen from './src/screens/AddMetricScreen';
@@ -22,8 +22,9 @@ const UserSettingsStack = createStackNavigator();
 function UserSettingsStackScreen(){
     return (
         <UserSettingsStack.Navigator screenOptions={{
-            headerStyle: { backgroundColor: '#069', },
-            headerTintColor: '#fff',
+            headerStyle: { backgroundColor: Colors.primary, },
+            headerTintColor: Colors.onPrimary,
+            cardStyle: { backgroundColor: Colors.background, },
         }}>
             <MetricsStack.Screen name='User Settings' component={UserSettingsScreen} />
         </UserSettingsStack.Navigator>
@@ -35,8 +36,9 @@ function MetricsStackScreen() {
     return (
         <MetricsStack.Navigator
             screenOptions={{
-                headerStyle: { backgroundColor: '#069', },
-                headerTintColor: '#fff',
+                headerStyle: { backgroundColor: Colors.primary, },
+                headerTintColor: Colors.onPrimary,
+                cardStyle: { backgroundColor: Colors.background, },
             }}>
             <MetricsStack.Screen name='MetricsScreen' component={MetricsScreen} options={{ title: 'My Metrics', }} />
             <MetricsStack.Screen name='AddMetricScreen' component={AddMetricScreen} options={{ title: 'New Metric', }}/>
@@ -52,8 +54,9 @@ const AboutStack = createStackNavigator();
 function AboutStackScreen(){
     return (
         <AboutStack.Navigator screenOptions={{
-            headerStyle: { backgroundColor: '#069', },
-            headerTintColor: '#fff',
+            headerStyle: { backgroundColor: Colors.primary, },
+            headerTintColor: Colors.onPrimary,
+            cardStyle: { backgroundColor: Colors.background, },
         }}>
             <MetricsStack.Screen name='About' component={AboutScreen} options={{ title: 'About jTracker', }}/>
             <MetricsStack.Screen name='LicensesScreen' component={LicensesScreen} options={{ title: 'Other Licenses', }}/>
@@ -68,10 +71,11 @@ export default function App() {
         <NavigationContainer ref={navigationRef}>
             <Tab.Navigator
                 tabBarOptions={{
-                    style: { backgroundColor: '#069', },
-                    activeTintColor: '#fff',
-                    inactiveTintColor: '#aaa',
-                    showLabel: false,
+                    style: { backgroundColor: Colors.primary, },
+                    activeBackgroundColor: Colors.primaryLight,
+                    activeTintColor: Colors.onPrimaryLight,
+                    inactiveTintColor: Colors.onPrimary,
+                    showLabel: true,
                 }}
             >
                 <Tab.Screen

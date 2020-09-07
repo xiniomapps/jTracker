@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { Button, Icon, ListItem } from 'react-native-elements';
+import { Icon, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { selectMetric } from '../redux/metricsReducer';
-import { nm } from '../styles/globalStyles';
+import { Colors, nm } from '../styles';
+import {HeaderButton} from '../components';
 
 class MetricsScreen extends Component {
     constructor(props) {
@@ -25,18 +26,10 @@ class MetricsScreen extends Component {
         this.props.navigation.setOptions({
             headerRight: () => {
                 return (
-                    <Button
-                        type='clear'
+                    <HeaderButton
+                        iconType='material'
+                        iconName='add'
                         onPress={ () => this.props.navigation.navigate('AddMetricScreen')}
-                        containerStyle={{marginRight: 5, minHeight: 48, minWidth: 48, }}
-                        icon={
-                            <Icon
-                                type='material'
-                                name='add'
-                                size={30}
-                                color='#fff'
-                            />
-                        }
                     />
                 );
             },
@@ -53,7 +46,7 @@ class MetricsScreen extends Component {
 
     subtitleFormatter = (item) => {
         return (
-            <Text style={{color: '#999', }}>
+            <Text style={{color: Colors.onSurfaceLight, }}>
                 Goal: {this.props.metricsReducer.collection[item].goal} {this.props.metricsReducer.collection[item].units}
             </Text>
         );
@@ -65,7 +58,13 @@ class MetricsScreen extends Component {
                 title={ this.titleFormatter(item) }
                 containerStyle={{minHeight: 48, }}
                 subtitle={ this.subtitleFormatter(item) }
-                chevron
+                chevron={
+                    <Icon
+                        type='material-community'
+                        name='chevron-right'
+                        color={Colors.onSurface}
+                    />
+                }
                 bottomDivider
                 onPress={ () => this.gotoItemDetails(item)}
                 leftIcon={
@@ -73,7 +72,7 @@ class MetricsScreen extends Component {
                         type='material-community'
                         name='chart-areaspline'
                         size={nm(25)}
-                        color='#006699'
+                        color={Colors.secondaryDark}
                     />
                 }
             />
@@ -96,8 +95,8 @@ class MetricsScreen extends Component {
             return (
                 <View
                     style={{justifyContent: 'center', paddingLeft: 15, paddingRight: 15, paddingTop: nm(50), }}>
-                    <Text style={{color: '#999', textAlign: 'center', fontSize: 16, marginBottom: 20, fontWeight: 'bold', }}>No metrics found</Text>
-                    <Text style={{color: '#999', textAlign: 'center', }}>Tap on the + icon to start adding your metrics.</Text>
+                    <Text style={{color: Colors.onSurface, textAlign: 'center', fontSize: 16, marginBottom: 20, fontWeight: 'bold', }}>No metrics found</Text>
+                    <Text style={{color: Colors.onSurface, textAlign: 'center', }}>Tap on the + icon to start adding your metrics.</Text>
                 </View>
             );
         }
