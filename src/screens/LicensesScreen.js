@@ -3,6 +3,7 @@ import { Text, View, FlatList } from 'react-native';
 import { Linking, Alert } from 'react-native';
 
 import { Icon, ListItem } from 'react-native-elements';
+import { Colors } from '../styles';
 
 export default class LicensesScreen extends Component {
     constructor(props) {
@@ -46,18 +47,24 @@ export default class LicensesScreen extends Component {
                     <Text style={{fontWeight: 'bold', }}>{item}</Text>
                 )}
                 subtitle={() => (
-                    <Text style={{color: '#999', }}>
+                    <Text style={{color: Colors.onSurfaceLight, }}>
                         License: {this.state.licenses[item].licenses}
                     </Text>
                 )}
-                chevron
+                chevron={
+                    <Icon
+                        type='material-community'
+                        name='chevron-right'
+                        color={Colors.onSurface}
+                    />
+                }
                 bottomDivider
                 onPress={ () => this.openUrl(this.state.licenses[item].licenseUrl) }
                 leftIcon={
                     <Icon
                         type='material-community'
                         name='source-branch'
-                        color='#069'
+                        color={Colors.secondaryDark}
                     />
                 }
             />

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button, Icon, CheckBox } from 'react-native-elements';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import { nm } from '../styles/globalStyles';
 import { delMetric, saveMetricSettings } from '../redux/metricsReducer';
 import { HeaderBackButton } from '@react-navigation/stack';
+import { Colors, nm } from '../styles';
 
 class MetricSettingsScreen extends Component {
     constructor(props) {
@@ -85,15 +85,20 @@ class MetricSettingsScreen extends Component {
                 <AwesomeAlert
                     show={this.state.showAlert}
                     title='Delete Metric'
+                    titleStyle={{color: Colors.onSurface, fontWeight: 'bold', }}
                     message='Are you sure you want to delete this metric? This action cannot be undone'
+                    messageStyle={{color: Colors.onSurface, }}
                     showCancelButton={true}
+                    cancelButtonColor={Colors.secondary}
+                    cancelButtonTextStyle={{color: Colors.onSecondary, fontWeight: 'bold', }}
                     cancelText='Cancel'
                     onCancelPressed={ () => {
                         this.setState({showAlert: false, });
                     }}
                     cancelButtonStyle={{minHeight:48, justifyContent: 'center', }}
                     showConfirmButton={true}
-                    confirmButtonColor='#990d00'
+                    confirmButtonColor={Colors.primary}
+                    confirmButtonTextStyle={{color: Colors.onPrimary, fontWeight: 'bold', }}
                     confirmText='Yes, delete it'
                     onConfirmPressed={this.deleteMetric}
                     confirmButtonStyle={{minHeight: 48, justifyContent: 'center', }}
@@ -103,14 +108,15 @@ class MetricSettingsScreen extends Component {
                         title='Chart starts from zero'
                         checked={this.state.settings.fromZero}
                         onPress={this.toggleFromZero}
-                        containerStyle={{minHeight: 48, }}
+                        containerStyle={{minHeight: 48, backgroundColor: Colors.surface, borderColor: Colors.surface, }}
+                        checkedColor={Colors.secondary}
                     />
                 </View>
                 <View>
                     <Button
                         title='Delete this metric'
-                        buttonStyle={{backgroundColor: '#990d00', minHeight: 48, }}
-                        titleStyle={{color: '#fff', }}
+                        buttonStyle={{backgroundColor: Colors.secondary, minHeight: 48, }}
+                        titleStyle={{color: Colors.onSecondary, }}
                         containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
                         type='outline'
                         raised
@@ -118,7 +124,7 @@ class MetricSettingsScreen extends Component {
                             this.setState({ showAlert: true, });
                         }}
                         icon={
-                            <Icon name='delete-outline' type='material-community' size={nm(15)} color='#fff' style={{marginRight: 10, }}/>
+                            <Icon name='delete-outline' type='material-community' size={nm(20)} color={Colors.onSecondary} style={{marginRight: 10, }}/>
                         }
                     />
                 </View>

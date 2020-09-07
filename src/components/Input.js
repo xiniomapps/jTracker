@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { Input as RNEInput } from 'react-native-elements';
-//import {globalStyles as gs, globalColors as gc} from '../styles/globalStyles';
 import PropTypes from 'prop-types';
+import { Colors } from '../styles';
 
 export default class Input extends Component {
     static propTypes = {
         label: PropTypes.string.isRequired,
+        labelStyle: PropTypes.object,
         placeholder: PropTypes.string.isRequired,
+        placeholderTextColor: PropTypes.string,
         iconName: PropTypes.string,
         iconType: PropTypes.string,
         name: PropTypes.string,
         onChange: PropTypes.func,
     }
+
+    static defaultProps ={
+        placeholderTextColor: Colors.onSurfaceLight,
+        errorStyle: {color: Colors.error, },
+    };
 
     handleChange = (e) => {
         if (typeof(this.props.onChange) == 'function'){
@@ -24,11 +31,13 @@ export default class Input extends Component {
             <RNEInput
                 {...this.props}
                 placeholder={this.props.placeholder}
+                placeholderTextColor={this.props.placeholderTextColor}
                 label={this.props.label}
                 //containerStyle={gs.inputOutContainer}
                 //inputContainerStyle={gs.inputInContainer}
-                //labelStyle={gs.inputLabel}
+                labelStyle={this.props.labelStyle}
                 inputStyle={{minHeight:48, }}
+                inputContainerStyle={{borderBottomColor: Colors.onSurfaceLight, borderBottomWidth: 2, }}
                 onChange={this.handleChange}
                 //leftIcon={
                 //    <Icon

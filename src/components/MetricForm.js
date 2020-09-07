@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Input from '../components/Input';
-import { nm } from '../styles/globalStyles';
 import FormValidator from '../utils/FormValidator';
 import {showMessage} from 'react-native-flash-message';
 import PropTypes from 'prop-types';
-
+import { nm, Colors } from '../styles';
 export default class MetricForm extends Component {
     constructor(props) {
         super(props);
@@ -87,6 +86,8 @@ export default class MetricForm extends Component {
                     description: 'Please check your input for fields: ' + Object.keys(this.state.fieldErrorsDesc).join(', '),
                     type: 'danger',
                     icon: 'auto',
+                    backgroundColor: Colors.error,
+                    color: Colors.onError,
                 });
             });
         }
@@ -127,6 +128,7 @@ export default class MetricForm extends Component {
                 <Input
                     name='name'
                     label='Name'
+                    labelStyle={{ color: Colors.onSurface, }}
                     value={this.state.fields.name}
                     placeholder='e.g. Weight'
                     onChange={this.onChange}
@@ -135,6 +137,7 @@ export default class MetricForm extends Component {
                 <Input
                     name='goal'
                     label='Goal Value'
+                    labelStyle={{ color: Colors.onSurface, }}
                     value={this.state.fields.goal}
                     placeholder='e.g. 90'
                     onChange={this.onChange}
@@ -144,6 +147,7 @@ export default class MetricForm extends Component {
                 <Input
                     name='units'
                     label='Units'
+                    labelStyle={{ color: Colors.onSurface, }}
                     value={this.state.fields.units}
                     placeholder='e.g. Kg (Optional)'
                     onChange={this.onChange}
@@ -152,23 +156,22 @@ export default class MetricForm extends Component {
                 <Input
                     name='reasons'
                     label='My Reasons'
+                    labelStyle={{ color: Colors.onSurface, }}
                     value={this.state.fields.reasons}
                     placeholder='Why are you tracking this (Freeform)'
                     onChange={this.onChange}
-                    multiline
-                    numberOfLines={3}
                     errorMessage={this.getErrorMessage('reasons')}
                 />
                 <Button
                     title='Save'
-                    buttonStyle={{backgroundColor: '#009933', minHeight: 48, }}
-                    titleStyle={{color: '#fff', }}
+                    buttonStyle={{backgroundColor: Colors.secondary, minHeight: 48, }}
+                    titleStyle={{color: Colors.onSecondary, }}
                     containerStyle={{marginVertical: nm(10), marginHorizontal: nm(20), }}
                     type='outline'
                     raised
                     onPress={this.onSave}
                     icon={
-                        <Icon name='content-save' type='material-community' size={nm(15)} color='#fff' style={{marginRight: 10, }} />
+                        <Icon name='content-save' type='material-community' size={nm(20)} color={Colors.onSecondary} style={{marginRight: 10, }} />
                     }
                 />
             </View>

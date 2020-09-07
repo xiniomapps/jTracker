@@ -3,6 +3,7 @@ import { Text, View, Image, ScrollView } from 'react-native';
 import {Card, Button} from 'react-native-elements';
 import UrlButton from '../components/UrlButton';
 import {globalStyles as gs} from '../styles/globalStyles';
+import {Colors} from '../styles';
 
 export default class AboutScreen extends Component {
     render() {
@@ -30,22 +31,22 @@ export default class AboutScreen extends Component {
                     <View>
                         <UrlButton
                             title='Home Page'
-                            color='#069'
+                            color={Colors.primaryDark}
                             url='https://gitlab.com/triebjlr/jtracker/'
                         />
                         <UrlButton
                             title='jTracker License'
-                            color='#069'
+                            color={Colors.primaryDark}
                             url='https://gitlab.com/triebjlr/jtracker/-/raw/development/LICENSE'
                         />
                         <UrlButton
                             title='Send suggestions and feedback'
-                            color='#069'
+                            color={Colors.primaryDark}
                             url='mailto:xiniomapps@gmail.com'
                         />
                         <UrlButton
                             title='Source Code on GitLab'
-                            color='#069'
+                            color={Colors.primaryDark}
                             url='https://gitlab.com/triebjlr/jtracker/'
                         />
                     </View>
@@ -55,12 +56,12 @@ export default class AboutScreen extends Component {
                     <View>
                         <UrlButton
                             title='Logo made by Kiranshastry'
-                            color='#069'
+                            color={Colors.primaryDark}
                             url='https://www.flaticon.com/free-icon/profits_711912'
                         />
                         <Button
                             title='Other Licenses'
-                            titleStyle={[gs.textButtonTitle, {color: '#069', }, ]}
+                            titleStyle={[gs.textButtonTitle, {color: Colors.primaryDark, }, ]}
                             buttonStyle={{minHeight: 48, }}
                             type='clear'
                             url='https://gitlab.com/triebjlr/jtracker/-/raw/development/LICENSE'
