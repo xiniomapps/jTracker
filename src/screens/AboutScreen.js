@@ -20,7 +20,7 @@ export default class AboutScreen extends Component {
                             />
                         </View>
                         <View>
-                            <Text>Version: 1.0-7</Text>
+                            <Text>Version: 1.0-8</Text>
                             <Text>Released: Aug 20, 2020</Text>
                             <Text>Developer: Jorge López Rivas</Text>
                         </View>

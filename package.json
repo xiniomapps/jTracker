@@ -1,6 +1,6 @@
 {
   "name": "jTracker",
-  "version": "1.0",
+  "version": "1.0-8",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
