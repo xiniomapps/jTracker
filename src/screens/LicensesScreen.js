@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, FlatList } from 'react-native';
-import { Linking, Alert } from 'react-native';
-
 import { Icon, ListItem } from 'react-native-elements';
 import { Colors } from '../styles';
 
@@ -12,31 +10,6 @@ export default class LicensesScreen extends Component {
         this.state = {
             licenses: require('../data/licenses'),
         };
-    }
-
-    openUrl = (url) => {
-        //Checks device can open url
-        Linking.canOpenURL(url)
-            .then((supported) => {
-                if (!supported) {
-                    this.browserAlert('Warning', 'Cannot open URL.');
-                }
-                else {
-                    return Linking.openURL(url);
-                }
-            })
-            .catch((err) => console.error('An error occurred while trying to open the URL', err));
-    }
-
-    browserAlert = (title, msj) => {
-        Alert.alert(
-            title,
-            msj,
-            [
-                {text: 'OK', onPress: () => { }, style: 'Cancel', },
-            ],
-            { cancelable: true, }
-        );
     }
 
     renderItem = ({item, }) => {
@@ -59,7 +32,10 @@ export default class LicensesScreen extends Component {
                     />
                 }
                 bottomDivider
-                onPress={ () => this.openUrl(this.state.licenses[item].licenseUrl) }
+                onPress={ () => this.props.navigation.navigate('ShowLicenseScreen', {
+                    url: this.state.licenses[item].licenseUrl,
+                    title: item,
+                })}
                 leftIcon={
                     <Icon
                         type='material-community'

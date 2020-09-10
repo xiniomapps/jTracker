@@ -41,7 +41,7 @@ export default class LicenseViewer extends Component {
     render() {
         return (
             <ScrollView>
-                <View style={this.props.containerStyle}>
+                <View style={[this.props.containerStyle, {paddingBottom: 30, }, ]}>
                     <Text style={this.props.textStyle}>
                         {this.state.text}
                     </Text>
