@@ -43,14 +43,14 @@ export default class LicensesScreen extends Component {
         return (
             <ListItem
                 containerStyle={{minHeight: 48, }}
-                title={() => (
+                title={(() => (
                     <Text style={{fontWeight: 'bold', }}>{item}</Text>
-                )}
-                subtitle={() => (
+                ))()}
+                subtitle={(() => (
                     <Text style={{color: Colors.onSurfaceLight, }}>
                         License: {this.state.licenses[item].licenses}
                     </Text>
-                )}
+                ))()}
                 chevron={
                     <Icon
                         type='material-community'
