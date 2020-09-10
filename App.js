@@ -17,6 +17,7 @@ import MetricsScreen from './src/screens/MetricsScreen';
 import MetricSettingsScreen from './src/screens/MetricSettingsScreen';
 import UserSettingsScreen from './src/screens/UserSettingsScreen';
 import LicensesScreen from './src/screens/LicensesScreen';
+import ShowLicenseScreen from './src/screens/ShowLicenseScreen';
 
 const UserSettingsStack = createStackNavigator();
 function UserSettingsStackScreen(){
@@ -60,6 +61,7 @@ function AboutStackScreen(){
         }}>
             <MetricsStack.Screen name='About' component={AboutScreen} options={{ title: 'About jTracker', }}/>
             <MetricsStack.Screen name='LicensesScreen' component={LicensesScreen} options={{ title: 'Other Licenses', }}/>
+            <MetricsStack.Screen name='ShowLicenseScreen' component={ShowLicenseScreen} options={{ title: 'License Viewer', }}/>
         </AboutStack.Navigator>
     );
 }

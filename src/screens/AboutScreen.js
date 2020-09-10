@@ -6,6 +6,9 @@ import {globalStyles as gs} from '../styles/globalStyles';
 import {Colors} from '../styles';
 
 export default class AboutScreen extends Component {
+
+
+
     render() {
         return (
             <ScrollView style={{flex: 1, padding: 15, }}>
@@ -32,12 +35,16 @@ export default class AboutScreen extends Component {
                         <UrlButton
                             title='Home Page'
                             color={Colors.primaryDark}
-                            url='https://gitlab.com/triebjlr/jtracker/'
+                            url='https://xiniom.com/'
                         />
-                        <UrlButton
+                        <Button
                             title='jTracker License'
-                            color={Colors.primaryDark}
-                            url='https://gitlab.com/triebjlr/jtracker/-/raw/development/LICENSE'
+                            titleStyle={[gs.textButtonTitle, {color: Colors.primaryDark, }, ]}
+                            buttonStyle={{minHeight: 48, }}
+                            type='clear'
+                            onPress={ () => this.props.navigation.navigate('ShowLicenseScreen', {
+                                url: 'https://raw.githubusercontent.com/xiniomapps/jTracker/development/LICENSE',
+                            })}
                         />
                         <UrlButton
                             title='Send suggestions and feedback'
@@ -45,9 +52,9 @@ export default class AboutScreen extends Component {
                             url='mailto:xiniomapps@gmail.com'
                         />
                         <UrlButton
-                            title='Source Code on GitLab'
+                            title='Source Code on GitHub'
                             color={Colors.primaryDark}
-                            url='https://gitlab.com/triebjlr/jtracker/'
+                            url='https://github.com/xiniomapps/jTracker'
                         />
                     </View>
                 </Card>
@@ -64,7 +71,6 @@ export default class AboutScreen extends Component {
                             titleStyle={[gs.textButtonTitle, {color: Colors.primaryDark, }, ]}
                             buttonStyle={{minHeight: 48, }}
                             type='clear'
-                            url='https://gitlab.com/triebjlr/jtracker/-/raw/development/LICENSE'
                             onPress={ () => this.props.navigation.navigate('LicensesScreen')}
                         />
                     </View>

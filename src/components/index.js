@@ -1,3 +1,4 @@
 import HeaderButton from './HeaderButton';
+import LicenseViewer from './LicenseViewer';
 
-export { HeaderButton };
+export { HeaderButton, LicenseViewer };
