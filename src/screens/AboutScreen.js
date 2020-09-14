@@ -4,7 +4,7 @@ import {Card, Button} from 'react-native-elements';
 import UrlButton from '../components/UrlButton';
 import {globalStyles as gs} from '../styles/globalStyles';
 import {Colors} from '../styles';
-
+import DeviceInfo from 'react-native-device-info';
 export default class AboutScreen extends Component {
 
 
@@ -23,8 +23,7 @@ export default class AboutScreen extends Component {
                             />
                         </View>
                         <View>
-                            <Text>Version: 1.0-8</Text>
-                            <Text>Released: Aug 20, 2020</Text>
+                            <Text>Version: {DeviceInfo.getVersion()}-{DeviceInfo.getBuildNumber()}</Text>
                             <Text>Developer: Jorge López Rivas</Text>
                         </View>
                     </View>
