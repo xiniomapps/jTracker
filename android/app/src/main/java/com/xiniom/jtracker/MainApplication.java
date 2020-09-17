@@ -1,4 +1,4 @@
-package com.jtracker;
+package com.xiniom.jtracker;
 
 import android.app.Application;
 import android.content.Context;
