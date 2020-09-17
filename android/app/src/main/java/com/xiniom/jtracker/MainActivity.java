@@ -1,4 +1,4 @@
-package com.jtracker;
+package com.xiniom.jtracker;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

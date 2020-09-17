@@ -585,7 +585,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiniom.jTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiniom.jtracker;
 				PRODUCT_NAME = jTracker;
 				SWIFT_OBJC_BRIDGING_HEADER = "jTracker-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -611,7 +611,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiniom.jTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiniom.jtracker;
 				PRODUCT_NAME = jTracker;
 				SWIFT_OBJC_BRIDGING_HEADER = "jTracker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

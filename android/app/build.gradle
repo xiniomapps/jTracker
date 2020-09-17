@@ -149,7 +149,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.jtracker"
+        applicationId "com.xiniom.jtracker"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 8
