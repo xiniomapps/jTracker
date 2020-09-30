@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "postversion": "react-native-version"
+    "postversion": "react-native-version",
+    "flow": "flow"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
@@ -42,10 +43,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/preset-flow": "^7.10.4",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
     "babel-jest": "^25.1.0",
     "eslint": "^6.5.1",
+    "flow-bin": "0.122.0",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-native-version": "^4.0.0",
