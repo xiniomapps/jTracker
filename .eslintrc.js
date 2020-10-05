@@ -11,11 +11,13 @@ module.exports = {
         "node": true
     },
     "plugins": [
-        "react"
+        "react",
+        "flowtype"
     ],
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:flowtype/recommended"
     ],
     "rules": {
 		"comma-dangle": ["error", {
