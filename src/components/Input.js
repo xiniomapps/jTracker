@@ -1,32 +1,34 @@
-import React, { Component } from 'react';
+//@flow
+import * as React from 'react';
 import { Input as RNEInput } from 'react-native-elements';
-import PropTypes from 'prop-types';
 import { Colors } from '../styles';
 
-export default class Input extends Component {
-    static propTypes = {
-        label: PropTypes.string.isRequired,
-        labelStyle: PropTypes.object,
-        placeholder: PropTypes.string.isRequired,
-        placeholderTextColor: PropTypes.string,
-        iconName: PropTypes.string,
-        iconType: PropTypes.string,
-        name: PropTypes.string,
-        onChange: PropTypes.func,
-    }
+type Props = {
+    label: string,
+    labelStyle?: {},
+    placeholder: string,
+    placeholderTextColor?: string,
+    iconName?: string,
+    iconType?: string,
+    name: string,
+    onChange?: (fieldName: string, fieldValue: string) => void,
+};
 
-    static defaultProps ={
+type ChangeEvent = { nativeEvent: Object};
+
+export default class Input extends React.Component<Props> {
+    static defaultProps: Object = {
         placeholderTextColor: Colors.onSurfaceLight,
         errorStyle: {color: Colors.error, },
     };
 
-    handleChange = (e) => {
+    handleChange: (event: ChangeEvent) => void = (event) => {
         if (typeof(this.props.onChange) == 'function'){
-            this.props.onChange(this.props.name, e.nativeEvent.text);
+            this.props.onChange(this.props.name, event.nativeEvent.text);
         }
     }
 
-    render() {
+    render(): React.Node {
         return (
             <RNEInput
                 {...this.props}

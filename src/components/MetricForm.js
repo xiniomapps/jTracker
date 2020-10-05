@@ -1,13 +1,32 @@
-import React, { Component } from 'react';
+//@flow
+import * as React from 'react';
 import { View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Input from '../components/Input';
-import FormValidator from '../utils/FormValidator';
+import * as FormValidator from '../utils/FormValidator';
 import {showMessage} from 'react-native-flash-message';
-import PropTypes from 'prop-types';
 import { nm, Colors } from '../styles';
-export default class MetricForm extends Component {
-    constructor(props) {
+
+type Fields = {|
+    name: string,
+    goal: string,
+    units: ?string,
+    reasons: ?string,
+|}
+type Props = {|
+    fields: Fields,
+    onSave: (fields: Fields) => void,
+    onChange: (fields: Fields) => void,
+|};
+
+type State = {|
+    fields: Fields,
+    fieldErrorsFlags: FormValidator.ValidationErrorFlags,
+    fieldErrorsDesc: FormValidator.ValidationErrors,
+|};
+
+export default class MetricForm extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
@@ -25,13 +44,7 @@ export default class MetricForm extends Component {
         };
     }
 
-    static propTypes = {
-        fields: PropTypes.object,
-        onSave: PropTypes.func,
-        onChange: PropTypes.func,
-    };
-
-    static defaultProps = {
+    static defaultProps: Props = {
         fields: {
             name: '',
             goal: '',
@@ -45,7 +58,7 @@ export default class MetricForm extends Component {
     /**
      * Defines constraints for field input, see: https://validatejs.org/#constraints
     */
-    fieldConstraints = {
+    fieldConstraints: FormValidator.ValidationConstraints = {
         name: {
             presence: {
                 allowEmpty: false,
@@ -71,8 +84,8 @@ export default class MetricForm extends Component {
         },
     }
 
-    onSave = () => {
-        let formValidator = new FormValidator();
+    onSave: () => void = () => {
+        let formValidator = new FormValidator.FormValidator();
         if (formValidator.validate(this.state.fields, this.fieldConstraints)){
             this.props.onSave(this.state.fields);
         }
@@ -98,7 +111,7 @@ export default class MetricForm extends Component {
      * @param {*} inputName The name of the field
      * @param {*} inputValue The new value of the field
      */
-    onChange = (inputName, inputValue) => {
+    onChange: (inputName: string, inputValue: string) => void = (inputName, inputValue) => {
         this.setState({
             ...this.state,
             fields: {
@@ -115,14 +128,14 @@ export default class MetricForm extends Component {
      * to show an errorMessage in the text field
      * @param {*} inputName name of the input
      */
-    getErrorMessage = (inputName) => {
+    getErrorMessage: (inputName: string) => string = (inputName) => {
         if (inputName in this.state.fieldErrorsDesc){
             return this.state.fieldErrorsDesc[inputName].join('. ');
         }
         return '';
     }
 
-    render() {
+    render(): React.Node {
         return (
             <View style={{flex: 1, marginVertical: nm(15), marginHorizontal: nm(20), }}>
                 <Input
