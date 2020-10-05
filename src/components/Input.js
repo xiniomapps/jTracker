@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import { Input as RNEInput } from 'react-native-elements';
+import { Icon, Input as RNEInput } from 'react-native-elements';
 import { Colors } from '../styles';
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
     placeholderTextColor?: string,
     iconName?: string,
     iconType?: string,
+    iconColor?: string,
     name: string,
     onChange?: (fieldName: string, fieldValue: string) => void,
 };
@@ -20,6 +21,9 @@ export default class Input extends React.Component<Props> {
     static defaultProps: Object = {
         placeholderTextColor: Colors.onSurfaceLight,
         errorStyle: {color: Colors.error, },
+        iconName: 'square-edit-outline',
+        iconType: 'material-community',
+        iconColor: Colors.onSurfaceLight,
     };
 
     handleChange: (event: ChangeEvent) => void = (event) => {
@@ -35,18 +39,17 @@ export default class Input extends React.Component<Props> {
                 placeholder={this.props.placeholder}
                 placeholderTextColor={this.props.placeholderTextColor}
                 label={this.props.label}
-                //containerStyle={gs.inputOutContainer}
-                //inputContainerStyle={gs.inputInContainer}
                 labelStyle={this.props.labelStyle}
                 inputStyle={{minHeight:48, }}
                 inputContainerStyle={{borderBottomColor: Colors.onSurfaceLight, borderBottomWidth: 2, }}
                 onChange={this.handleChange}
-                //leftIcon={
-                //    <Icon
-                //        type={this.props.iconType}
-                //        iconStyle={{ color: gc.aztecaGreen, }}
-                //        name={this.props.iconName} />
-                //}
+                leftIcon={
+                    <Icon
+                        type={this.props.iconType}
+                        color={this.props.iconColor}
+                        name={this.props.iconName}
+                    />
+                }
             />
         );
     }
